@@ -1,8 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -38,7 +39,14 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">BloodLink</a>
+        <a
+          onClick={() => {
+            navigate("/");
+          }}
+          className="btn btn-ghost text-xl"
+        >
+          BloodLink
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">

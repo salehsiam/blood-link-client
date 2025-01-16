@@ -4,10 +4,12 @@ import useAuth from "../../Hooks/useAuth";
 import { useState, useEffect } from "react";
 import useAreaLocation from "../../Hooks/useAreaLocation";
 import bloodImg from "./../../assets/pngegg.png";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Registration = () => {
   const { createUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
 
   const [districts, upazilaData] = useAreaLocation();
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -38,18 +40,23 @@ const Registration = () => {
     const bloodGroup = form.blood_group.value;
     const upazila = form.upazila.value;
 
-    console.log({
+    const userData = {
       name,
       email,
-      password,
       bloodGroup,
       districts: selectedDistrict,
       upazila,
-    });
+      role: "donor",
+      status: "active",
+    };
+    console.log(userData);
     createUser(email, password).then((result) => {
       updateUserProfile(name)
         .then((result) => {
           navigate("/");
+          axiosPublic.post("/users", userData).then((res) => {
+            console.log(res.data);
+          });
         })
         .catch((error) => console.log(error));
     });
