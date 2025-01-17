@@ -8,6 +8,7 @@ import Profile from "../Pages/Dashboard/Profile";
 import UserDashboard from "../Pages/Dashboard/UserDashboard/UserDashboard";
 import CreateDonation from "../Pages/Dashboard/UserDashboard/CreateDonation";
 import MyDonationRequest from "../Pages/Dashboard/UserDashboard/MyDonationRequest";
+import DonationDetails from "../Pages/DonationDetails/DonationDetails";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
         path: "registration",
         element: <Registration></Registration>,
       },
+
       {
         path: "/dashboard",
         element: <Dashboard></Dashboard>,
@@ -47,6 +49,10 @@ const router = createBrowserRouter([
             element: <CreateDonation></CreateDonation>,
           },
         ],
+      },
+      {
+        path: "/donation-request-details/:id",
+        element: <DonationDetails></DonationDetails>,
       },
     ],
   },

@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAuth from "../../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 const CreateDonation = () => {
   const [districts, upazilaData] = useAreaLocation();
@@ -52,12 +53,21 @@ const CreateDonation = () => {
       bloodGroup,
       time,
       date: startDate,
+      status: "pending",
     };
     console.log(donationRequestData);
 
     axiosPublic.post("/blood-request", donationRequestData).then((res) => {
       console.log(res.data);
       form.reset();
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Blood Request Submitted",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     });
   };
   return (
@@ -220,7 +230,7 @@ const CreateDonation = () => {
           {/* Submit Button */}
           <div className="form-control mt-6">
             <button type="submit" className="btn btn-primary">
-              Sign Up
+              Request
             </button>
           </div>
         </form>

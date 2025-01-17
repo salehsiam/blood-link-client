@@ -29,7 +29,7 @@ const Dashboard = () => {
           </li>
         </ul>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 overflow-x-auto">
         <Outlet></Outlet>
       </div>
     </div>
