@@ -13,7 +13,7 @@ const MyDonationRequest = () => {
   console.log(bloodRequest);
   const updateStatus = async (id, newStatus) => {
     axiosSecure
-      .patch(`/blood-request/${id}`, {
+      .patch(`/set-status/${id}`, {
         status: newStatus,
       })
       .then((res) => {
@@ -102,7 +102,12 @@ const MyDonationRequest = () => {
                 </td>
 
                 <td>
-                  <button className="btn btn-primary btn-xs">Edit</button>
+                  <Link
+                    to={`/dashboard/updated-donation/${singleRequest._id}`}
+                    className="btn btn-primary btn-xs"
+                  >
+                    Edit
+                  </Link>
                   <button
                     onClick={() => handleDelete(singleRequest._id)}
                     className="btn btn-warning btn-xs"
