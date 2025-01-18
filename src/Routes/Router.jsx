@@ -10,6 +10,7 @@ import CreateDonation from "../Pages/Dashboard/UserDashboard/CreateDonation";
 import MyDonationRequest from "../Pages/Dashboard/UserDashboard/MyDonationRequest";
 import DonationDetails from "../Pages/DonationDetails/DonationDetails";
 import UpdatedDonation from "../Pages/Dashboard/UserDashboard/UpdatedDonation";
+import AllUser from "../Pages/Dashboard/AdminDashboard/AllUser";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,11 @@ const router = createBrowserRouter([
           {
             path: "updated-donation/:id",
             element: <UpdatedDonation></UpdatedDonation>,
+          },
+          // admin dashboard
+          {
+            path: "admin/all-user",
+            element: <AllUser></AllUser>,
           },
         ],
       },
