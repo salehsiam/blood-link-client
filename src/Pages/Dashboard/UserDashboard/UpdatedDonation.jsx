@@ -260,7 +260,7 @@ const UpdatedDonation = () => {
               </label>
               <DatePicker
                 className="input input-bordered"
-                selected={reqData.date}
+                selected={startDate}
                 onChange={(date) => setStartDate(date)}
               />
             </div>

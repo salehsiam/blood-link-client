@@ -8,9 +8,7 @@ import Swal from "sweetalert2";
 
 const MyDonationRequest = () => {
   const [bloodRequest, refetch] = useDonationRequest();
-
   const axiosSecure = useAxiosSecure();
-  console.log(bloodRequest);
   const updateStatus = async (id, newStatus) => {
     axiosSecure
       .patch(`/set-status/${id}`, {

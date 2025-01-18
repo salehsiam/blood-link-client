@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import useAreaLocation from "../../Hooks/useAreaLocation";
 import bloodImg from "./../../assets/pngegg.png";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Registration = () => {
   const { createUser, updateUserProfile } = useAuth();
@@ -39,27 +41,38 @@ const Registration = () => {
     const password = form.password.value;
     const bloodGroup = form.blood_group.value;
     const upazila = form.upazila.value;
+    const imageFile = { image: form.image.files[0] };
 
-    const userData = {
-      name,
-      email,
-      bloodGroup,
-      districts: selectedDistrict,
-      upazila,
-      role: "donor",
-      status: "active",
-    };
-    console.log(userData);
-    createUser(email, password).then((result) => {
-      updateUserProfile(name)
-        .then((result) => {
-          navigate("/");
-          axiosPublic.post("/users", userData).then((res) => {
-            console.log(res.data);
+    axiosPublic
+      .post(image_hosting_api, imageFile, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          const userData = {
+            name,
+            email,
+            bloodGroup,
+            districts: selectedDistrict,
+            upazila,
+            image: res.data.data.display_url,
+            role: "donor",
+            status: "active",
+          };
+          createUser(email, password).then((result) => {
+            updateUserProfile(name)
+              .then((result) => {
+                navigate("/");
+                axiosPublic.post("/users", userData).then((res) => {
+                  console.log(res.data);
+                });
+              })
+              .catch((error) => console.log(error));
           });
-        })
-        .catch((error) => console.log(error));
-    });
+        }
+      });
   };
 
   return (
@@ -160,6 +173,16 @@ const Registration = () => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Profie Image</span>
+              </label>
+              <input
+                type="file"
+                name="image"
+                className="file-input file-input-bordered w-full max-w-xs"
+              />
             </div>
 
             {/* Submit Button */}

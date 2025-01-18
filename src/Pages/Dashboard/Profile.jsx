@@ -6,8 +6,17 @@ const Profile = () => {
   return (
     <div>
       <div>
-        <div className="flex">
-          <h3 className="text-3xl font-semibold">{userData.name}</h3>
+        <div className="flex justify-between bg-red-600 py-10 px-10">
+          <div>
+            <img
+              className="w-44 h-44 object-cover"
+              src={userData.image}
+              alt=""
+            />
+            <h3 className="text-3xl font-semibold text-white">
+              {userData.name}
+            </h3>
+          </div>
           <button className="btn">Edit</button>
         </div>
         <div>
