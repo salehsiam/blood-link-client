@@ -4,8 +4,8 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
 
 const SearchPage = () => {
-  const [districts, upazilaData] = useAreaLocation(); // Fetch district and upazila data
-  const axiosPublic = useAxiosPublic(); // Axios instance for API calls
+  const [districts, upazilaData] = useAreaLocation();
+  const axiosPublic = useAxiosPublic();
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [filteredUpazilas, setFilteredUpazilas] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState({
@@ -13,8 +13,8 @@ const SearchPage = () => {
     district: "",
     upazila: "",
   });
-  const [searchResults, setSearchResults] = useState([]); // To store search results
-  const [loading, setLoading] = useState(false); // To manage loading state
+  const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleDistrictChange = (e) => {
     const districtName = e.target.value;
@@ -40,13 +40,13 @@ const SearchPage = () => {
     try {
       const response = await axiosPublic.get("/search-donation-request", {
         params: {
-          status: "pending", // Optional filter for status
+          status: "pending",
           bloodGroup: searchCriteria.bloodGroup,
           recipient_zila: searchCriteria.district,
           recipient_upazila: searchCriteria.upazila,
         },
       });
-      setSearchResults(response.data); // Store search results
+      setSearchResults(response.data);
     } catch (error) {
       console.error("Error fetching search results:", error);
     } finally {
@@ -129,7 +129,6 @@ const SearchPage = () => {
         </div>
       </form>
 
-      {/* Search Results */}
       <div className="mt-6">
         {loading ? (
           <p>Loading...</p>
