@@ -1,7 +1,9 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [isAdmin] = useAdmin();
   return (
     <div className="flex gap-10">
       <div className="w-64 bg-red-300 min-h-screen">
@@ -13,21 +15,37 @@ const Dashboard = () => {
         >
           BloodLink
         </h2>
-        <ul className="menu p-4">
-          <li>
-            <NavLink to="/dashboard/profile">Profile</NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/my-donation-request">
-              My Donation Request
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/create-donation-request">
-              Create Donation Request
-            </NavLink>
-          </li>
-        </ul>
+        {isAdmin ? (
+          <ul className="menu p-4">
+            <li>
+              <NavLink to="/dashboard/profile">Profile</NavLink>
+            </li>
+            <li>
+              <NavLink to="/dashboard/all-blood-donation-request">
+                All Donation Request
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/dashboard/all-users">All User</NavLink>
+            </li>
+          </ul>
+        ) : (
+          <ul className="menu p-4">
+            <li>
+              <NavLink to="/dashboard/profile">Profile</NavLink>
+            </li>
+            <li>
+              <NavLink to="/dashboard/my-donation-request">
+                My Donation Request
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/dashboard/create-donation-request">
+                Create Donation Request
+              </NavLink>
+            </li>
+          </ul>
+        )}
       </div>
       <div className="flex-1">
         <Outlet></Outlet>

@@ -74,15 +74,15 @@ const Profile = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImageFile(file); // Save the selected file
-      setImagePreview(URL.createObjectURL(file)); // Update the preview
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault(); // Prevent form refresh
+    e.preventDefault();
 
-    let uploadedImageUrl = userData.image; // Default to existing image URL
+    let uploadedImageUrl = userData.image;
     if (imageFile) {
       // Upload the image to IMGBB
       const formData = new FormData();
@@ -94,7 +94,7 @@ const Profile = () => {
             "Content-Type": "multipart/form-data",
           },
         });
-        uploadedImageUrl = response.data.data.display_url; // Get uploaded image URL
+        uploadedImageUrl = response.data.data.display_url;
       } catch (error) {
         console.error("Image upload failed:", error);
         Swal.fire({

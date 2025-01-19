@@ -14,6 +14,10 @@ import AllUser from "../Pages/Dashboard/AdminDashboard/AllUser";
 import AllBloodDonation from "../Pages/Dashboard/AdminDashboard/AllBloodDonation";
 import PendingDonationReq from "../Pages/DonationRequest/PendingDonationReq";
 import SearchPage from "../Pages/SearchPage/SearchPage";
+import AdminRoute from "./AdminRoute";
+import PrivateRoute from "./PrivateRoute";
+import ContentManagement from "../Pages/Dashboard/AdminDashboard/ContentManagement";
+import AddBlogPage from "../Pages/Dashboard/AdminDashboard/AddBlogPage";
 
 const router = createBrowserRouter([
   {
@@ -68,18 +72,40 @@ const router = createBrowserRouter([
           },
           // admin dashboard
           {
-            path: "admin/all-user",
-            element: <AllUser></AllUser>,
+            path: "all-users",
+            element: (
+              <AdminRoute>
+                <AllUser></AllUser>
+              </AdminRoute>
+            ),
           },
           {
             path: "all-blood-donation-request",
-            element: <AllBloodDonation></AllBloodDonation>,
+            element: (
+              <AdminRoute>
+                <AllBloodDonation></AllBloodDonation>
+              </AdminRoute>
+            ),
+          },
+          {
+            path: "content-management",
+            element: <ContentManagement></ContentManagement>,
+            children: [
+              {
+                path: "add-blog",
+                element: <AddBlogPage></AddBlogPage>,
+              },
+            ],
           },
         ],
       },
       {
         path: "/donation-request-details/:id",
-        element: <DonationDetails></DonationDetails>,
+        element: (
+          <PrivateRoute>
+            <DonationDetails></DonationDetails>
+          </PrivateRoute>
+        ),
       },
     ],
   },

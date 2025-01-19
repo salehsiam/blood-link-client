@@ -4,6 +4,11 @@ import useAuth from "../../Hooks/useAuth";
 const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const handleLogout = () => {
+    logout().then((res) => {
+      navigate("/login");
+    });
+  };
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -85,7 +90,7 @@ const Navbar = () => {
               <NavLink to="/dashboard">Dashboard</NavLink>
             </li>
             <li>
-              <button onClick={() => logout()}>Logout</button>
+              <button onClick={handleLogout}>Logout</button>
             </li>
           </ul>
         </div>

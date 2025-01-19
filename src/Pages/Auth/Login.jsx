@@ -1,10 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import donateBlood from "./../../assets/donateBlood.png";
 import useAuth from "../../Hooks/useAuth";
 
 const Login = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -13,7 +15,7 @@ const Login = () => {
     signIn(email, password)
       .then((res) => {
         console.log("loggedIn");
-        navigate("/");
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         console.log(err);
@@ -59,7 +61,7 @@ const Login = () => {
             {/* Submit Button */}
             <div className="form-control mt-6">
               <button type="submit" className="btn btn-primary">
-                Sign Up
+                Login
               </button>
             </div>
           </form>
