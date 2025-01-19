@@ -8,7 +8,7 @@ const AdminRoute = ({ children }) => {
   const location = useLocation();
   if (loading || isAdminLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="min-h-screen flex justify-center items-center ">
         <progress className="progress w-56"></progress>
       </div>
     );
