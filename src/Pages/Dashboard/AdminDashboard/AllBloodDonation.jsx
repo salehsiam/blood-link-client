@@ -1,37 +1,22 @@
-import Swal from "sweetalert2";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-
-import useAuth from "../../../Hooks/useAuth";
-import { Link } from "react-router-dom";
-import { format } from "date-fns";
-
-import { useQuery } from "@tanstack/react-query";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import useAllDonationRequest from "../../../Hooks/useAllDonationRequest";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { format } from "date-fns";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const UserDashboard = () => {
+const AllBloodDonation = () => {
+  const [allBloodReq, refetch] = useAllDonationRequest();
   const axiosSecure = useAxiosSecure();
-
-  const { user } = useAuth();
-  const { data: bloodRequest = [], refetch } = useQuery({
-    queryKey: ["blood-request-limit"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/blood-request-limit?email=${user.email}`
-      );
-      return res.data;
-    },
-  });
-
   const updateStatus = async (id, newStatus) => {
-    try {
-      const res = await axiosSecure.patch(`/set-status/${id}`, {
+    axiosSecure
+      .patch(`/set-status/${id}`, {
         status: newStatus,
+      })
+      .then((res) => {
+        console.log(res.data);
+        refetch();
       });
-      console.log(res.data);
-      refetch();
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
   };
 
   const handleDelete = (id) => {
@@ -46,20 +31,25 @@ const UserDashboard = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/blood-request/${id}`).then((res) => {
+          console.log(res.data);
+          refetch();
           if (res.data.deletedCount > 0) {
-            refetch();
-            Swal.fire("Deleted!", "Blood request deleted.", "success");
+            Swal.fire({
+              title: "Deleted!",
+              text: "Blood request deleted.",
+              icon: "success",
+            });
           }
         });
       }
     });
   };
-
   return (
     <div>
-      <h2 className="text-3xl font-semibold">Welcome</h2>
+      <h2 className="text-2xl">All Donation Request: </h2>
       <div className="overflow-x-auto min-h-screen">
         <table className="table table-zebra">
+          {/* head */}
           <thead>
             <tr>
               <th></th>
@@ -74,7 +64,7 @@ const UserDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {bloodRequest.map((singleRequest, idx) => (
+            {allBloodReq?.map((singleRequest, idx) => (
               <tr key={singleRequest._id}>
                 <th>{idx + 1}</th>
                 <td>{singleRequest.recipient_name}</td>
@@ -156,4 +146,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default AllBloodDonation;

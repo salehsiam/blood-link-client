@@ -5,9 +5,11 @@ import { format } from "date-fns";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import Loading from "../../Shared-Components/Loading";
 
 const MyDonationRequest = () => {
-  const [bloodRequest, refetch] = useDonationRequest();
+  const [bloodRequest, refetch, isLoading] = useDonationRequest();
   const axiosSecure = useAxiosSecure();
   const updateStatus = async (id, newStatus) => {
     axiosSecure
@@ -45,10 +47,13 @@ const MyDonationRequest = () => {
       }
     });
   };
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
   return (
     <div>
       <h2 className="text-2xl">My Donation Request: {bloodRequest.length}</h2>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto min-h-screen">
         <table className="table table-zebra">
           {/* head */}
           <thead>
@@ -78,53 +83,68 @@ const MyDonationRequest = () => {
                 <td>{singleRequest.bloodGroup}</td>
                 <td>{singleRequest.status}</td>
                 <td>
-                  <p>Name: Jane Doe</p>
-                  <p>Email: jane.doe@example.com</p>
+                  <p>Name: {singleRequest?.donor_name}</p>
+                  <p>Email: {singleRequest?.donor_email}</p>
                 </td>
-                <td className="*:mr-1 space-y-1">
-                  <button
-                    onClick={() => updateStatus(singleRequest._id, "done")}
-                    className="btn btn-xs btn-primary text-white"
-                    disabled={singleRequest.status !== "inprogress"}
-                  >
-                    Done
-                  </button>
-                  <button
-                    onClick={() => updateStatus(singleRequest._id, "cancel")}
-                    className="btn btn-danger btn-xs "
-                    disabled={singleRequest.status !== "inprogress"}
-                  >
-                    {" "}
-                    Cancel
-                  </button>
-                </td>
-
                 <td>
-                  <Link
-                    to={`/dashboard/updated-donation/${singleRequest._id}`}
-                    className="btn btn-primary btn-xs"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(singleRequest._id)}
-                    className="btn btn-warning btn-xs"
-                  >
-                    Delete
-                  </button>
-                </td>
+                  <div className="dropdown dropdown-end">
+                    {/* Three-dot menu button */}
+                    <label tabIndex={0} className="btn btn-ghost">
+                      <span className="material-icons">
+                        <BsThreeDotsVertical />
+                      </span>
+                    </label>
 
-                <td>
-                  <Link
-                    to={`/donation-request-details/${singleRequest._id}`}
-                    className="btn btn-info btn-xs"
-                  >
-                    View
-                  </Link>
+                    {/* Dropdown menu */}
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content menu p-2 shadow bg-base-100 z-40 rounded-box w-52"
+                    >
+                      <li>
+                        <button
+                          onClick={() =>
+                            updateStatus(singleRequest._id, "done")
+                          }
+                          disabled={singleRequest.status !== "inprogress"}
+                        >
+                          Done
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() =>
+                            updateStatus(singleRequest._id, "cancel")
+                          }
+                          disabled={singleRequest.status !== "inprogress"}
+                        >
+                          {" "}
+                          Cancel
+                        </button>
+                      </li>
+                      <li>
+                        <Link
+                          to={`/dashboard/updated-donation/${singleRequest._id}`}
+                        >
+                          Edit
+                        </Link>
+                      </li>
+                      <li>
+                        <button onClick={() => handleDelete(singleRequest._id)}>
+                          Delete
+                        </button>
+                      </li>
+                      <li>
+                        <Link
+                          to={`/donation-request-details/${singleRequest._id}`}
+                        >
+                          View
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 </td>
               </tr>
             ))}
-            {/* row 1 */}
           </tbody>
         </table>
       </div>

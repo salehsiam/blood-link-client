@@ -5,14 +5,18 @@ import useAuth from "./useAuth";
 const useUsers = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
-  const { data: userData = [], refetch } = useQuery({
+  const {
+    data: userData = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosPublic.get(`/users?email=${user.email}`);
       return res.data[0];
     },
   });
-  return [userData, refetch];
+  return [userData, refetch, isLoading];
 };
 
 export default useUsers;

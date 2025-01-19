@@ -5,12 +5,13 @@ import { FaEdit } from "react-icons/fa";
 import useAreaLocation from "../../Hooks/useAreaLocation";
 import axios from "axios";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Loading from "../Shared-Components/Loading";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Profile = () => {
-  const [userData, refetch] = useUsers(); // Fetch user data and refetch function
+  const [userData, refetch, isLoading] = useUsers(); // Fetch user data and refetch function
   const [isEditing, setIsEditing] = useState(false); // Toggle for edit mode
   const axiosPublic = useAxiosPublic();
 
@@ -137,6 +138,9 @@ const Profile = () => {
       });
     }
   };
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="container mx-auto p-6">
@@ -187,7 +191,7 @@ const Profile = () => {
           // Edit mode
           <form onSubmit={handleFormSubmit}>
             <div className="flex justify-end mb-4">
-              <button type="submit" className="btn btn-success">
+              <button type="submit" className="btn text-white btn-success">
                 Save
               </button>
             </div>

@@ -7,10 +7,10 @@ import useAuth from "../../Hooks/useAuth";
 
 const DonationDetails = () => {
   const { id } = useParams(); // Get donation request ID from URL
-  const [requestDetails, setRequestDetails] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const [requestDetails, setRequestDetails] = useState({});
 
   // Fetch donation request details
   useEffect(() => {
@@ -22,8 +22,14 @@ const DonationDetails = () => {
 
   // Handle confirm donation
   const handleConfirmDonation = () => {
+    const donor_email = user?.email;
+    const donor_name = user?.displayName;
     axiosSecure
-      .patch(`/set-status/${id}`, { status: "inprogress" })
+      .patch(`/set-status/${id}`, {
+        status: "inprogress",
+        donor_name,
+        donor_email,
+      })
       .then((res) => {
         if (res.data.modifiedCount > 0) {
           Swal.fire({
@@ -31,7 +37,13 @@ const DonationDetails = () => {
             text: "Donation status updated to inprogress.",
             icon: "success",
           });
-          setRequestDetails({ ...requestDetails, status: "inprogress" });
+          setRequestDetails({
+            ...requestDetails,
+            status: "inprogress",
+            donor_name,
+            donor_email,
+          });
+          console.log(requestDetails);
           setIsModalOpen(false);
         }
       })

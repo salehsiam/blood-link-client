@@ -11,6 +11,9 @@ import MyDonationRequest from "../Pages/Dashboard/UserDashboard/MyDonationReques
 import DonationDetails from "../Pages/DonationDetails/DonationDetails";
 import UpdatedDonation from "../Pages/Dashboard/UserDashboard/UpdatedDonation";
 import AllUser from "../Pages/Dashboard/AdminDashboard/AllUser";
+import AllBloodDonation from "../Pages/Dashboard/AdminDashboard/AllBloodDonation";
+import PendingDonationReq from "../Pages/DonationRequest/PendingDonationReq";
+import SearchPage from "../Pages/SearchPage/SearchPage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +31,15 @@ const router = createBrowserRouter([
       {
         path: "registration",
         element: <Registration></Registration>,
+      },
+
+      {
+        path: "donation-request",
+        element: <PendingDonationReq></PendingDonationReq>,
+      },
+      {
+        path: "search-donation-request",
+        element: <SearchPage></SearchPage>,
       },
 
       {
@@ -58,6 +70,10 @@ const router = createBrowserRouter([
           {
             path: "admin/all-user",
             element: <AllUser></AllUser>,
+          },
+          {
+            path: "all-blood-donation-request",
+            element: <AllBloodDonation></AllBloodDonation>,
           },
         ],
       },
