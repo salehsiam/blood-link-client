@@ -18,6 +18,8 @@ import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 import ContentManagement from "../Pages/Dashboard/AdminDashboard/ContentManagement";
 import AddBlogPage from "../Pages/Dashboard/AdminDashboard/AddBlogPage";
+import FundingPage from "../Pages/FundingPage/FundingPage";
+import Payment from "../Pages/FundingPage/Payment";
 
 const router = createBrowserRouter([
   {
@@ -56,7 +58,11 @@ const router = createBrowserRouter([
           },
           {
             path: "profile",
-            element: <Profile></Profile>,
+            element: (
+              <PrivateRoute>
+                <Profile></Profile>
+              </PrivateRoute>
+            ),
           },
           {
             path: "my-donation-request",
@@ -90,12 +96,10 @@ const router = createBrowserRouter([
           {
             path: "content-management",
             element: <ContentManagement></ContentManagement>,
-            children: [
-              {
-                path: "add-blog",
-                element: <AddBlogPage></AddBlogPage>,
-              },
-            ],
+          },
+          {
+            path: "content-management/add-blog",
+            element: <AddBlogPage></AddBlogPage>,
           },
         ],
       },
@@ -106,6 +110,14 @@ const router = createBrowserRouter([
             <DonationDetails></DonationDetails>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/funding",
+        element: <FundingPage></FundingPage>,
+      },
+      {
+        path: "/payment",
+        element: <Payment></Payment>,
       },
     ],
   },

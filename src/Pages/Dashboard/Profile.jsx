@@ -109,7 +109,7 @@ const Profile = () => {
     // Prepare form data
     const formData = {
       name: formState.name,
-      image: uploadedImageUrl, // Use uploaded image URL
+      image: uploadedImageUrl,
       bloodGroup: formState.bloodGroup,
       districts: formState.districts,
       upazila: formState.upazila,

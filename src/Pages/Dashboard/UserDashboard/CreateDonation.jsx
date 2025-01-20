@@ -114,6 +114,7 @@ const CreateDonation = () => {
               name="recipient_name"
               placeholder="Recipient Name"
               className="input input-bordered"
+              required
             />
           </div>
 
@@ -125,6 +126,7 @@ const CreateDonation = () => {
               onChange={handleDistrictChange}
               value={selectedDistrict}
               className="select select-bordered"
+              required
             >
               <option value="">-- Select a District --</option>
               {districts.map((district) => (
@@ -142,6 +144,7 @@ const CreateDonation = () => {
               name="upazila"
               className="select select-bordered"
               disabled={!selectedDistrict}
+              required
             >
               <option value="">-- Select Upazila --</option>
               {filteredUpazilas.map((upazila) => (
@@ -161,6 +164,7 @@ const CreateDonation = () => {
               name="hospital_name"
               placeholder="Hospital Name"
               className="input input-bordered"
+              required
             />
           </div>
           {/* Address */}
@@ -173,13 +177,18 @@ const CreateDonation = () => {
               name="address"
               placeholder="Full Address"
               className="input input-bordered"
+              required
             />
           </div>
 
           {/* Blood Group Select */}
           <div className="form-control">
             <label>Blood Group</label>
-            <select name="blood_group" className="select select-bordered">
+            <select
+              required
+              name="blood_group"
+              className="select select-bordered"
+            >
               <option value="A+">A+</option>
               <option value="A-">A-</option>
               <option value="B+">B+</option>
@@ -212,6 +221,7 @@ const CreateDonation = () => {
                 className="input input-bordered"
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
+                required
               />
             </div>
           </div>
@@ -224,6 +234,7 @@ const CreateDonation = () => {
               name="request_message"
               className="textarea textarea-bordered"
               placeholder="Request Message"
+              required
             ></textarea>
           </div>
 

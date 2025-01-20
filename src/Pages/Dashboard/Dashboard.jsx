@@ -28,6 +28,11 @@ const Dashboard = () => {
             <li>
               <NavLink to="/dashboard/all-users">All User</NavLink>
             </li>
+            <li>
+              <NavLink to="/dashboard/content-management">
+                Content Management
+              </NavLink>
+            </li>
           </ul>
         ) : (
           <ul className="menu p-4">

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import JoditEditor from "jodit-react";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddBlogPage = () => {
   const axiosPublic = useAxiosPublic();
@@ -11,11 +13,12 @@ const AddBlogPage = () => {
   const handleThumbnailUpload = async (file) => {
     const formData = new FormData();
     formData.append("image", file);
-    const res = await axiosPublic.post(
-      `https://api.imgbb.com/1/upload?key=YOUR_IMAGEBB_API_KEY`,
-      formData
-    );
-    return res.data.data.url;
+    const res = await axiosPublic.post(image_hosting_api, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res.data.data.display_url;
   };
 
   const handleSubmit = async (e) => {
@@ -32,8 +35,9 @@ const AddBlogPage = () => {
         title,
         thumbnail: imageUrl,
         content,
-        status: "draft", // Default status
+        status: "draft",
       };
+      console.log(blogData);
 
       const response = await axiosPublic.post("/blogs", blogData);
       if (response.data.insertedId) {
@@ -69,10 +73,22 @@ const AddBlogPage = () => {
           <label className="block font-semibold mb-2">Thumbnail Image</label>
           <input
             type="file"
+            name="thumbnail_image"
             className="file-input w-full"
             onChange={(e) => setThumbnail(e.target.files[0])}
           />
         </div>
+        {/* image input */}
+        {/* <div className="form-control">
+          <label className="label">
+            <span className="label-text">Profile Image</span>
+          </label>
+          <input
+            type="file"
+            name="image"
+            className="file-input file-input-bordered w-full "
+          />
+        </div> */}
 
         <div className="mb-4">
           <label className="block font-semibold mb-2">Blog Content</label>

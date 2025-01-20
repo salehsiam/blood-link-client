@@ -31,7 +31,6 @@ const useAxiosSecure = () => {
 
       if (status === 401 || status === 400) {
         await logout();
-        navigate("/forbidden");
       }
       return Promise.reject(error);
     }

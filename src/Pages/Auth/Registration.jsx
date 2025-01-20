@@ -174,9 +174,10 @@ const Registration = () => {
                 ))}
               </select>
             </div>
+            {/* image input */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Profie Image</span>
+                <span className="label-text">Profile Image</span>
               </label>
               <input
                 type="file"

@@ -4,9 +4,10 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import Loading from "../../Shared-Components/Loading";
 
 const AllBloodDonation = () => {
-  const [allBloodReq, refetch] = useAllDonationRequest();
+  const [allBloodReq, refetch,isLoading] = useAllDonationRequest();
   const axiosSecure = useAxiosSecure();
   const updateStatus = async (id, newStatus) => {
     axiosSecure
@@ -44,6 +45,9 @@ const AllBloodDonation = () => {
       }
     });
   };
+  if(isLoading){
+    return <Loading></Loading>
+  }
   return (
     <div>
       <h2 className="text-2xl">All Donation Request: </h2>
