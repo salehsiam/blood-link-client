@@ -4,8 +4,12 @@ import Navbar from "../Pages/Shared-Components/Navbar";
 const MainLayout = () => {
   return (
     <div>
-      <Navbar></Navbar>
-      <Outlet></Outlet>
+      <nav className="w-11/12 mx-auto">
+        <Navbar></Navbar>
+      </nav>
+      <main className="max-w-7xl mx-auto">
+        <Outlet></Outlet>
+      </main>
     </div>
   );
 };

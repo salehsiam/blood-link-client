@@ -2,23 +2,14 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { useState } from "react";
-
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 const Payment = () => {
-  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
   const [amount, setAmount] = useState("");
-  const [donorName, setDonorName] = useState("");
+
   return (
-    <div className="p-6 bg-white shadow-md rounded-lg">
+    <div className="w-2/3 mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-bold mb-4">Give Fund</h2>
-      <form className="space-y-4">
-        <input
-          type="name"
-          placeholder="Your Name"
-          value={donorName}
-          onChange={(e) => setDonorName(e.target.value)}
-          className="input input-bordered w-full"
-          required
-        />
+      <div className="space-y-4">
         <input
           type="number"
           placeholder="Amount (USD)"
@@ -28,9 +19,9 @@ const Payment = () => {
           required
         />
         <Elements stripe={stripePromise}>
-          <CheckoutForm donorName={donorName} amount={amount} />
+          <CheckoutForm amount={amount} />
         </Elements>
-      </form>
+      </div>
     </div>
   );
 };

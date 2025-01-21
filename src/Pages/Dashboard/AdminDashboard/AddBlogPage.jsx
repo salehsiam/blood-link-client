@@ -1,6 +1,7 @@
 import { useState } from "react";
 import JoditEditor from "jodit-react";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
@@ -41,7 +42,13 @@ const AddBlogPage = () => {
 
       const response = await axiosPublic.post("/blogs", blogData);
       if (response.data.insertedId) {
-        alert("Blog created successfully!");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Blog created successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         setTitle("");
         setThumbnail(null);
         setContent("");
@@ -78,17 +85,6 @@ const AddBlogPage = () => {
             onChange={(e) => setThumbnail(e.target.files[0])}
           />
         </div>
-        {/* image input */}
-        {/* <div className="form-control">
-          <label className="label">
-            <span className="label-text">Profile Image</span>
-          </label>
-          <input
-            type="file"
-            name="image"
-            className="file-input file-input-bordered w-full "
-          />
-        </div> */}
 
         <div className="mb-4">
           <label className="block font-semibold mb-2">Blog Content</label>

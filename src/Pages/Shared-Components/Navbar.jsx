@@ -1,8 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import useUsers from "../../Hooks/useUsers";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const [userData] = useUsers();
   const navigate = useNavigate();
   const handleLogout = () => {
     logout().then((res) => {
@@ -37,7 +39,7 @@ const Navbar = () => {
               <NavLink to="/donation-request">Donation Request</NavLink>
             </li>
             <li>
-              <NavLink to="/blog">Blog</NavLink>
+              <NavLink to="/blogs">Blog</NavLink>
             </li>
             <li>
               <NavLink to="/login">Login</NavLink>
@@ -59,7 +61,7 @@ const Navbar = () => {
             <NavLink to="/donation-request">Donation Request</NavLink>
           </li>
           <li>
-            <NavLink to="/blog">Blog</NavLink>
+            <NavLink to="/blogs">Blog</NavLink>
           </li>
           {!user && (
             <li>
@@ -73,13 +75,11 @@ const Navbar = () => {
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle avatar"
+            className="btn btn-ghost btn-circle tooltip tooltip-left avatar"
+            data-tip={userData.name}
           >
             <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
+              <img alt={userData.name} src={userData.image} />
             </div>
           </div>
           <ul

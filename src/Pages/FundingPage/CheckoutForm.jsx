@@ -2,17 +2,30 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./CheckoutForm.css";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAuth from "../../Hooks/useAuth";
 
-const CheckoutForm = ({ donorName, amount }) => {
+const CheckoutForm = ({ amount }) => {
   const axiosSecure = useAxiosSecure();
   const [clientSecret, setClientSecret] = useState("");
-  useEffect(() => {
-    axiosSecure.post('/create-payment-intent',)
-  }, []);
-
- 
   const stripe = useStripe();
   const elements = useElements();
+  const { user } = useAuth();
+  const [processing, setProcessing] = useState(false);
+  useEffect(() => {
+    if (amount > 0.5) {
+      axiosSecure
+        .post("/create-payment-intent", { amount })
+        .then((res) => {
+          console.log(res.data.clientSecret);
+          if (res.data && res.data.clientSecret) {
+            setClientSecret(res.data.clientSecret);
+          } else {
+            console.error("Invalid response from server:", res.data);
+          }
+        })
+        .catch((err) => console.error("Payment Intent Error:", err));
+    }
+  }, [amount, axiosSecure]);
 
   const handleSubmit = async (event) => {
     // Block native form submission.
@@ -23,6 +36,7 @@ const CheckoutForm = ({ donorName, amount }) => {
       // form submission until Stripe.js has loaded.
       return;
     }
+    setProcessing(true);
 
     // Get a reference to a mounted CardElement. Elements knows how
     // to find your CardElement because there can only ever be one of
@@ -37,12 +51,28 @@ const CheckoutForm = ({ donorName, amount }) => {
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card,
+      billing_details: {
+        name: user?.displayName,
+        email: user?.email,
+      },
     });
 
     if (error) {
       console.log("[error]", error);
-    } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      setProcessing(false);
+    }
+    const { paymentIntent, error: confirmError } =
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method: paymentMethod.id,
+      });
+
+    if (confirmError) {
+      console.error("Payment Confirmation Error:", confirmError);
+    } else if (paymentIntent.status === "succeeded") {
+      alert("Payment successful! Thank you for your donation.");
+      console.log("Payment Successful", paymentIntent);
+      console.log(paymentMethod);
+      setProcessing(false);
     }
   };
 
@@ -67,9 +97,9 @@ const CheckoutForm = ({ donorName, amount }) => {
       <button
         className="btn btn-primary w-full"
         type="submit"
-        disabled={!stripe}
+        disabled={!stripe || !clientSecret}
       >
-        Pay
+        {processing ? "Processing..." : "Pay"}
       </button>
     </form>
   );

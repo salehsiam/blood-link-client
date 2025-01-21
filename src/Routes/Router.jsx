@@ -20,6 +20,8 @@ import ContentManagement from "../Pages/Dashboard/AdminDashboard/ContentManageme
 import AddBlogPage from "../Pages/Dashboard/AdminDashboard/AddBlogPage";
 import FundingPage from "../Pages/FundingPage/FundingPage";
 import Payment from "../Pages/FundingPage/Payment";
+import Blog from "../Pages/Blog/Blog";
+import BlogDetails from "../Pages/Blog/BlogDetails";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const router = createBrowserRouter([
       {
         path: "search-donation-request",
         element: <SearchPage></SearchPage>,
+      },
+      {
+        path: "blogs",
+        element: <Blog></Blog>,
+      },
+      {
+        path: "blog-details/:id",
+        element: <BlogDetails></BlogDetails>,
       },
 
       {

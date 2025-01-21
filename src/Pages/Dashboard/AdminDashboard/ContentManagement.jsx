@@ -3,10 +3,12 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const ContentManagement = () => {
   const axiosSecure = useAxiosSecure();
   const [status, setStatus] = useState("");
+  const [isAdmin] = useAdmin();
 
   const {
     data: blogs = [],
@@ -48,56 +50,59 @@ const ContentManagement = () => {
   };
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex px-6 justify-between">
         <h2 className="text-4xl font-bold">Manage Blog</h2>
         <Link to="/dashboard/content-management/add-blog">
           <button className="btn btn-primary">Add Blog</button>
         </Link>
       </div>
 
-      <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {blogs.map((blog) => (
           <div
             key={blog._id}
-            className="flex gap-10 items-center shadow-md p-4"
+            className="flex flex-col gap-8 max-w-[440px] mx-auto  shadow-md p-4"
           >
             <div>
               <img
                 src={blog.thumbnail}
                 alt={blog.title}
-                className="w-full h-64 object-cover rounded-md"
+                className="w-full h-52 object-cover rounded-md"
               />
             </div>
-            <div className="space-y-4">
+            <div className="grow">
               <h2 className="text-xl font-bold mt-2">{blog.title}</h2>
               <p
                 dangerouslySetInnerHTML={{
                   __html: blog.content.substring(0, 200) + "...",
                 }}
               ></p>
-              <div className="mt-4 flex gap-2">
-                {blog.status === "draft" ? (
-                  <button
-                    onClick={() => handleStatusChange(blog._id, "published")}
-                    className="btn btn-success"
-                  >
-                    Publish
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handleStatusChange(blog._id, "draft")}
-                    className="btn btn-warning"
-                  >
-                    Unpublish
-                  </button>
-                )}
+            </div>
+            <div className="mt-2 flex gap-2">
+              {blog.status === "draft" ? (
                 <button
-                  onClick={() => handleDelete(blog._id)}
-                  className="btn btn-error"
+                  disabled={!isAdmin}
+                  onClick={() => handleStatusChange(blog._id, "published")}
+                  className="btn btn-success"
                 >
-                  Delete
+                  Publish
                 </button>
-              </div>
+              ) : (
+                <button
+                  disabled={!isAdmin}
+                  onClick={() => handleStatusChange(blog._id, "draft")}
+                  className="btn btn-warning"
+                >
+                  Unpublish
+                </button>
+              )}
+              <button
+                disabled={!isAdmin}
+                onClick={() => handleDelete(blog._id)}
+                className="btn btn-error"
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}

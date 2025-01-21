@@ -94,7 +94,7 @@ const AllUser = () => {
                     {/* Dropdown menu */}
                     <ul
                       tabIndex={0}
-                      className="dropdown-content menu p-2 shadow bg-base-100 z-40 rounded-box w-52"
+                      className="dropdown-content menu p-2 py-6 shadow bg-base-100 z-40 rounded-box w-52"
                     >
                       <li>
                         {singleUser.status === "blocked" && (
@@ -111,7 +111,6 @@ const AllUser = () => {
                             onClick={() =>
                               updateStatus(singleUser._id, "blocked")
                             }
-                            className="btn btn-xs"
                           >
                             block
                           </button>
@@ -119,6 +118,7 @@ const AllUser = () => {
                       </li>
                       <li>
                         <button
+                          className="border-y"
                           onClick={() => updateRole(singleUser._id, "admin")}
                         >
                           make admin
