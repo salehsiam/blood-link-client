@@ -3,6 +3,7 @@ import "./CheckoutForm.css";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 const CheckoutForm = ({ amount }) => {
   const axiosSecure = useAxiosSecure();
@@ -69,9 +70,24 @@ const CheckoutForm = ({ amount }) => {
     if (confirmError) {
       console.error("Payment Confirmation Error:", confirmError);
     } else if (paymentIntent.status === "succeeded") {
-      alert("Payment successful! Thank you for your donation.");
       console.log("Payment Successful", paymentIntent);
-      console.log(paymentMethod);
+
+      const funding = {
+        name: user.displayName,
+        amount: paymentIntent.amount,
+        email: user?.email,
+        date: new Date(),
+        transactionId: paymentIntent.id,
+      };
+      await axiosSecure.post("/funding", funding).then((res) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Donate successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
       setProcessing(false);
     }
   };

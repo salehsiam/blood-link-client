@@ -5,9 +5,11 @@ import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "../../Shared-Components/Loading";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const AllBloodDonation = () => {
-  const [allBloodReq, refetch,isLoading] = useAllDonationRequest();
+  const [allBloodReq, refetch, isLoading] = useAllDonationRequest();
+  const [isAdmin] = useAdmin();
   const axiosSecure = useAxiosSecure();
   const updateStatus = async (id, newStatus) => {
     axiosSecure
@@ -45,8 +47,8 @@ const AllBloodDonation = () => {
       }
     });
   };
-  if(isLoading){
-    return <Loading></Loading>
+  if (isLoading) {
+    return <Loading></Loading>;
   }
   return (
     <div>
@@ -127,16 +129,22 @@ const AllBloodDonation = () => {
                         </Link>
                       </li>
                       <li>
-                        <button onClick={() => handleDelete(singleRequest._id)}>
-                          Delete
-                        </button>
+                        {isAdmin && (
+                          <button
+                            onClick={() => handleDelete(singleRequest._id)}
+                          >
+                            Delete
+                          </button>
+                        )}
                       </li>
                       <li>
-                        <Link
-                          to={`/donation-request-details/${singleRequest._id}`}
-                        >
-                          View
-                        </Link>
+                        {isAdmin && (
+                          <Link
+                            to={`/donation-request-details/${singleRequest._id}`}
+                          >
+                            View
+                          </Link>
+                        )}
                       </li>
                     </ul>
                   </div>

@@ -1,9 +1,12 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
+import useVolunteer from "../../Hooks/useVolunteer";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isAdmin] = useAdmin();
+  const [isVolunteer] = useVolunteer();
+  console.log(isVolunteer);
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -47,7 +50,7 @@ const Dashboard = () => {
           >
             BloodLink
           </h2>
-          {isAdmin ? (
+          {isAdmin && (
             <ul className="menu p-4">
               <li>
                 <NavLink to="/dashboard/profile">Profile</NavLink>
@@ -66,7 +69,26 @@ const Dashboard = () => {
                 </NavLink>
               </li>
             </ul>
-          ) : (
+          )}
+          {isVolunteer && (
+            <ul className="menu p-4">
+              <li>
+                <NavLink to="/dashboard/profile">Profile</NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/all-blood-donation-request">
+                  All Donation Request
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/content-management">
+                  Content Management
+                </NavLink>
+              </li>
+            </ul>
+          )}
+
+          {!isAdmin && !isVolunteer && (
             <ul className="menu p-4">
               <li>
                 <NavLink to="/dashboard/profile">Profile</NavLink>

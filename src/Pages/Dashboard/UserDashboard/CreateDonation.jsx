@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import useUsers from "../../../Hooks/useUsers";
 
 const CreateDonation = () => {
   const [districts, upazilaData] = useAreaLocation();
@@ -14,6 +15,7 @@ const CreateDonation = () => {
   const [startDate, setStartDate] = useState(new Date());
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
+  const [userData] = useUsers();
 
   const handleDistrictChange = (e) => {
     const districtName = e.target.value;
@@ -56,6 +58,16 @@ const CreateDonation = () => {
       status: "pending",
     };
     console.log(donationRequestData);
+    console.log(userData);
+
+    if (userData.status === "blocked") {
+      Swal.fire({
+        icon: "error",
+        title: "You has been blocked",
+        text: "Something went wrong!",
+      });
+      return;
+    }
 
     axiosPublic.post("/blood-request", donationRequestData).then((res) => {
       console.log(res.data);

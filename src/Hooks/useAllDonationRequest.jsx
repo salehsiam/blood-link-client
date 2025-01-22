@@ -8,9 +8,9 @@ const useAllDonationRequest = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["all-blood-req"],
+    queryKey: ["all-blood-request"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/blood-request");
+      const res = await axiosSecure.get("/all-blood-req");
       return res.data;
     },
   });

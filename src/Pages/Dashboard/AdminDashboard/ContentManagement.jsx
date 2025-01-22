@@ -78,32 +78,34 @@ const ContentManagement = () => {
                 }}
               ></p>
             </div>
-            <div className="mt-2 flex gap-2">
-              {blog.status === "draft" ? (
+            {isAdmin && (
+              <div className="mt-2 flex gap-2">
+                {blog.status === "draft" ? (
+                  <button
+                    disabled={!isAdmin}
+                    onClick={() => handleStatusChange(blog._id, "published")}
+                    className="btn btn-success"
+                  >
+                    Publish
+                  </button>
+                ) : (
+                  <button
+                    disabled={!isAdmin}
+                    onClick={() => handleStatusChange(blog._id, "draft")}
+                    className="btn btn-warning"
+                  >
+                    Unpublish
+                  </button>
+                )}
                 <button
                   disabled={!isAdmin}
-                  onClick={() => handleStatusChange(blog._id, "published")}
-                  className="btn btn-success"
+                  onClick={() => handleDelete(blog._id)}
+                  className="btn btn-error"
                 >
-                  Publish
+                  Delete
                 </button>
-              ) : (
-                <button
-                  disabled={!isAdmin}
-                  onClick={() => handleStatusChange(blog._id, "draft")}
-                  className="btn btn-warning"
-                >
-                  Unpublish
-                </button>
-              )}
-              <button
-                disabled={!isAdmin}
-                onClick={() => handleDelete(blog._id)}
-                className="btn btn-error"
-              >
-                Delete
-              </button>
-            </div>
+              </div>
+            )}
           </div>
         ))}
       </div>

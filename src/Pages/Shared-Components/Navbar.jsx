@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import useUsers from "../../Hooks/useUsers";
+import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -78,8 +79,12 @@ const Navbar = () => {
             className="btn btn-ghost btn-circle tooltip tooltip-left avatar"
             data-tip={userData.name}
           >
-            <div className="w-10 rounded-full">
-              <img alt={userData.name} src={userData.image} />
+            <div className="w-10 justify-center items-center rounded-full">
+              {user ? (
+                <img alt={userData.name} src={userData.image} />
+              ) : (
+                <FaUserCircle className="text-3xl" />
+              )}
             </div>
           </div>
           <ul

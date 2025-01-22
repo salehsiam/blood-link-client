@@ -22,6 +22,8 @@ import FundingPage from "../Pages/FundingPage/FundingPage";
 import Payment from "../Pages/FundingPage/Payment";
 import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/Blog/BlogDetails";
+import AdminDashboard from "../Pages/Dashboard/AdminDashboard/AdminDashboard";
+import useUsers from "../Hooks/useUsers";
 
 const router = createBrowserRouter([
   {
@@ -59,61 +61,6 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/dashboard",
-        element: <Dashboard></Dashboard>,
-        children: [
-          {
-            path: "/dashboard",
-            element: <UserDashboard></UserDashboard>,
-          },
-          {
-            path: "profile",
-            element: (
-              <PrivateRoute>
-                <Profile></Profile>
-              </PrivateRoute>
-            ),
-          },
-          {
-            path: "my-donation-request",
-            element: <MyDonationRequest></MyDonationRequest>,
-          },
-          {
-            path: "create-donation-request",
-            element: <CreateDonation></CreateDonation>,
-          },
-          {
-            path: "updated-donation/:id",
-            element: <UpdatedDonation></UpdatedDonation>,
-          },
-          // admin dashboard
-          {
-            path: "all-users",
-            element: (
-              <AdminRoute>
-                <AllUser></AllUser>
-              </AdminRoute>
-            ),
-          },
-          {
-            path: "all-blood-donation-request",
-            element: (
-              <AdminRoute>
-                <AllBloodDonation></AllBloodDonation>
-              </AdminRoute>
-            ),
-          },
-          {
-            path: "content-management",
-            element: <ContentManagement></ContentManagement>,
-          },
-          {
-            path: "content-management/add-blog",
-            element: <AddBlogPage></AddBlogPage>,
-          },
-        ],
-      },
-      {
         path: "/donation-request-details/:id",
         element: (
           <PrivateRoute>
@@ -128,6 +75,62 @@ const router = createBrowserRouter([
       {
         path: "/payment",
         element: <Payment></Payment>,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "/dashboard",
+        element: <UserDashboard></UserDashboard>,
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-donation-request",
+        element: <MyDonationRequest></MyDonationRequest>,
+      },
+      {
+        path: "create-donation-request",
+        element: <CreateDonation></CreateDonation>,
+      },
+      {
+        path: "updated-donation/:id",
+        element: <UpdatedDonation></UpdatedDonation>,
+      },
+      // admin dashboard
+
+      {
+        path: "stat-dashboard",
+        element: <AdminDashboard></AdminDashboard>,
+      },
+      {
+        path: "all-users",
+        element: (
+          <AdminRoute>
+            <AllUser></AllUser>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "all-blood-donation-request",
+        element: <AllBloodDonation></AllBloodDonation>,
+      },
+      {
+        path: "content-management",
+        element: <ContentManagement></ContentManagement>,
+      },
+      {
+        path: "content-management/add-blog",
+        element: <AddBlogPage></AddBlogPage>,
       },
     ],
   },
