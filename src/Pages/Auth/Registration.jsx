@@ -93,7 +93,7 @@ const Registration = () => {
   };
 
   return (
-    <div className="hero  min-h-screen">
+    <div className="hero  min-h-screen py-24">
       <div className="hero-content flex-row-reverse">
         <div className="text-center w-1/2 lg:text-left">
           <img src={bloodImg} alt="" />
