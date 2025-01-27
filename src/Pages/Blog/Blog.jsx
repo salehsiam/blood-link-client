@@ -12,7 +12,7 @@ const Blog = () => {
     });
   }, []);
   return (
-    <div>
+    <div className="py-24">
       <SectionTitle
         heading="Latest Blog for you"
         subHeading="-- Blog --"

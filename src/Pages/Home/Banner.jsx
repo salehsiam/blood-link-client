@@ -1,10 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import bloodCell from "./../../assets/blood.jpg";
-import blood from "./../../assets/donateBlood.png";
 
 const Banner = () => {
+  const navigate = useNavigate();
   return (
     <div
-      className="relative flex items-center w-full h-[560px]"
+      className="relative flex items-center w-full h-[620px]"
       style={{
         backgroundImage: `url('${bloodCell}')`,
         backgroundSize: "cover",
@@ -24,10 +25,20 @@ const Banner = () => {
           match easily.
         </p>
         <div className="flex gap-4">
-          <button className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg">
+          <button
+            onClick={() => {
+              navigate("/registration");
+            }}
+            className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg"
+          >
             Join as a Donor
           </button>
-          <button className="px-6 py-3 bg-white text-black font-semibold rounded-lg">
+          <button
+            onClick={() => {
+              navigate("/search-donation-request");
+            }}
+            className="px-6 py-3 bg-white text-black font-semibold rounded-lg"
+          >
             Search
           </button>
         </div>

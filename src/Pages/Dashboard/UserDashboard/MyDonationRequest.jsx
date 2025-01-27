@@ -9,17 +9,14 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import Loading from "../../Shared-Components/Loading";
 
 const MyDonationRequest = () => {
-  const [bloodRequest, refetch, isLoading] = useDonationRequest();
+  const [bloodRequest, refetch, isLoading, setPage, page, limit] =
+    useDonationRequest();
   const axiosSecure = useAxiosSecure();
+
   const updateStatus = async (id, newStatus) => {
-    axiosSecure
-      .patch(`/set-status/${id}`, {
-        status: newStatus,
-      })
-      .then((res) => {
-        console.log(res.data);
-        refetch();
-      });
+    axiosSecure.patch(`/set-status/${id}`, { status: newStatus }).then(() => {
+      refetch();
+    });
   };
 
   const handleDelete = (id) => {
@@ -34,28 +31,30 @@ const MyDonationRequest = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/blood-request/${id}`).then((res) => {
-          console.log(res.data);
-          refetch();
           if (res.data.deletedCount > 0) {
             Swal.fire({
               title: "Deleted!",
               text: "Blood request deleted.",
               icon: "success",
             });
+            refetch();
           }
         });
       }
     });
   };
+
   if (isLoading) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
+
   return (
-    <div>
-      <h2 className="text-2xl">My Donation Request: {bloodRequest.length}</h2>
+    <div className="my-8 px-6">
+      <h2 className="text-2xl">
+        My Donation Requests: {bloodRequest.data.length}
+      </h2>
       <div className="overflow-x-auto min-h-screen">
         <table className="table table-zebra">
-          {/* head */}
           <thead>
             <tr>
               <th></th>
@@ -70,7 +69,7 @@ const MyDonationRequest = () => {
             </tr>
           </thead>
           <tbody>
-            {bloodRequest.map((singleRequest, idx) => (
+            {bloodRequest.data.map((singleRequest, idx) => (
               <tr key={singleRequest._id}>
                 <th>{idx + 1}</th>
                 <td>{singleRequest.recipient_name}</td>
@@ -88,14 +87,9 @@ const MyDonationRequest = () => {
                 </td>
                 <td>
                   <div className="dropdown dropdown-end">
-                    {/* Three-dot menu button */}
                     <label tabIndex={0} className="btn btn-ghost">
-                      <span className="material-icons">
-                        <BsThreeDotsVertical />
-                      </span>
+                      <BsThreeDotsVertical />
                     </label>
-
-                    {/* Dropdown menu */}
                     <ul
                       tabIndex={0}
                       className="dropdown-content menu p-2 shadow bg-base-100 z-40 rounded-box w-52"
@@ -117,7 +111,6 @@ const MyDonationRequest = () => {
                           }
                           disabled={singleRequest.status !== "inprogress"}
                         >
-                          {" "}
                           Cancel
                         </button>
                       </li>
@@ -147,6 +140,26 @@ const MyDonationRequest = () => {
             ))}
           </tbody>
         </table>
+        {/* Pagination Controls */}
+        <div className="flex justify-end mt-4">
+          <button
+            className="btn btn-outline mx-2"
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            Previous
+          </button>
+          <button
+            className="btn btn-outline"
+            disabled={page === bloodRequest.totalPages}
+            onClick={() => setPage(page + 1)}
+          >
+            Next
+          </button>
+        </div>
+        <p className="text-right mt-2">
+          Page {page} of {bloodRequest.totalPages}
+        </p>
       </div>
     </div>
   );

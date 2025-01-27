@@ -1,71 +1,40 @@
-import Swal from "sweetalert2";
-import useAllUser from "../../../Hooks/useAllUser";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import useAllUser from "../../../Hooks/useAllUser";
 import Loading from "../../Shared-Components/Loading";
 
 const AllUser = () => {
-  const [allUserData, refetch, isLoading] = useAllUser();
-  const axiosSecure = useAxiosSecure();
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 10;
+  const { data, refetch, isLoading } = useAllUser(currentPage, usersPerPage);
 
-  const updateStatus = async (id, newStatus) => {
-    axiosSecure
-      .patch(`/manage-user-status/${id}`, {
-        status: newStatus,
-      })
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: newStatus,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          refetch();
-        }
-      });
+  const { users, totalUsers, totalPages } = data;
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    refetch();
   };
-  const updateRole = async (id, newRole) => {
-    axiosSecure
-      .patch(`/manage-user-role/${id}`, {
-        role: newRole,
-      })
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: newRole,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          refetch();
-        }
-      });
-  };
+
   if (isLoading) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
+
   return (
-    <div>
-      <h2 className="text-2xl">Welcome</h2>
-      <div className="overflow-x-auto min-h-screen">
+    <div className="mt-16 px-6">
+      <h2 className="text-2xl">All Users: {totalUsers}</h2>
+      <div className="overflow-x-auto ">
         <table className="table">
-          {/* head */}
+          {/* Table header */}
           <thead>
             <tr>
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
               <th>Status</th>
-              <th></th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            {allUserData.map((singleUser) => (
+            {users.map((singleUser) => (
               <tr key={singleUser._id}>
                 <td>
                   <div className="flex items-center gap-3">
@@ -82,64 +51,31 @@ const AllUser = () => {
                 <td>{singleUser.email}</td>
                 <td>{singleUser.role}</td>
                 <td>{singleUser.status}</td>
-                <td>
-                  <div className="dropdown dropdown-end">
-                    {/* Three-dot menu button */}
-                    <label tabIndex={0} className="btn btn-ghost">
-                      <span className="material-icons">
-                        <BsThreeDotsVertical />
-                      </span>
-                    </label>
-
-                    {/* Dropdown menu */}
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu p-2 py-6 shadow bg-base-100 z-40 rounded-box w-52"
-                    >
-                      <li>
-                        {singleUser.status === "blocked" && (
-                          <button
-                            onClick={() =>
-                              updateStatus(singleUser._id, "active")
-                            }
-                          >
-                            unblock
-                          </button>
-                        )}
-                        {singleUser.status === "active" && (
-                          <button
-                            onClick={() =>
-                              updateStatus(singleUser._id, "blocked")
-                            }
-                          >
-                            block
-                          </button>
-                        )}
-                      </li>
-                      <li>
-                        <button
-                          className="border-y"
-                          onClick={() => updateRole(singleUser._id, "admin")}
-                        >
-                          make admin
-                        </button>
-                      </li>
-                      <li>
-                        <button
-                          onClick={() =>
-                            updateRole(singleUser._id, "volunteer")
-                          }
-                        >
-                          make volunteer
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </td>
+                <td>{/* Actions (like block/unblock, make admin, etc.) */}</td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+      {/* Pagination controls */}
+      <div className="flex justify-center mt-4">
+        <button
+          className="btn"
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          Previous
+        </button>
+        <span className="mx-4">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          className="btn"
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

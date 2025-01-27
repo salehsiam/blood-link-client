@@ -14,7 +14,7 @@ const BlogDetails = () => {
   }, []);
   console.log(blog);
   return (
-    <div className="w-3/4 mx-auto p-6">
+    <div className="w-3/4 mx-auto px-6 py-24">
       <img
         src={blog.thumbnail}
         alt={blog.title}

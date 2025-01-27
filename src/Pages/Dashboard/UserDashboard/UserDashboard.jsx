@@ -7,9 +7,11 @@ import { format } from "date-fns";
 
 import { useQuery } from "@tanstack/react-query";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import useUsers from "../../../Hooks/useUsers";
 
 const UserDashboard = () => {
   const axiosSecure = useAxiosSecure();
+  const [userData] = useUsers();
 
   const { user } = useAuth();
   const { data: bloodRequest = [], refetch } = useQuery({
@@ -56,8 +58,8 @@ const UserDashboard = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-3xl font-semibold">Welcome</h2>
+    <div className="px-4 my-8">
+      <h2 className="text-3xl mb-3 font-semibold">Welcome {userData.name}</h2>
       <div className="overflow-x-auto min-h-screen">
         <table className="table table-zebra">
           <thead>

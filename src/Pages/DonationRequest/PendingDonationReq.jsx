@@ -1,22 +1,32 @@
+import React, { useState } from "react";
 import { format } from "date-fns";
 import usePendingDonation from "../../Hooks/usePendingDonation";
 import Loading from "../Shared-Components/Loading";
 import { Link } from "react-router-dom";
 
 const PendingDonationReq = () => {
-  const [pendingBloodReq, isLoading] = usePendingDonation();
-  console.log(pendingBloodReq);
+  const [page, setPage] = useState(1); // Current page
+  const limit = 10; // Number of requests per page
+  const { requests, totalRequests, totalPages, isLoading, error } =
+    usePendingDonation(page, limit);
+
   if (isLoading) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
+
+  if (error) {
+    return (
+      <p className="text-red-500">Error loading requests: {error.message}</p>
+    );
+  }
+
   return (
-    <div>
-      <h2 className="text-2xl">Pending Request</h2>
+    <div className="py-24">
+      <h2 className="text-4xl mb-6">Pending Requests</h2>
       <div className="overflow-x-auto min-h-screen">
         <table className="table table-zebra">
-          {/* head */}
           <thead>
-            <tr>
+            <tr className="bg-red-600 text-white">
               <th></th>
               <th>Recipient Name</th>
               <th>Recipient Address</th>
@@ -29,9 +39,9 @@ const PendingDonationReq = () => {
             </tr>
           </thead>
           <tbody>
-            {pendingBloodReq?.map((singleRequest, idx) => (
+            {requests.map((singleRequest, idx) => (
               <tr key={singleRequest._id}>
-                <th>{idx + 1}</th>
+                <th>{idx + 1 + (page - 1) * limit}</th>
                 <td>{singleRequest.recipient_name}</td>
                 <td>
                   {singleRequest.recipient_upazila},{" "}
@@ -47,7 +57,7 @@ const PendingDonationReq = () => {
                 </td>
                 <td>
                   <Link
-                    className="btn btn-xs btn-secondary"
+                    className="btn btn-xs bg-red-600 text-white"
                     to={`/donation-request-details/${singleRequest._id}`}
                   >
                     View
@@ -57,6 +67,27 @@ const PendingDonationReq = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="mt-4 flex justify-between">
+        <button
+          className="btn bg-red-600 text-white"
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+        >
+          Previous
+        </button>
+        <p>
+          Page {page} of {totalPages} ({totalRequests} total requests)
+        </p>
+        <button
+          className="btn bg-red-600 text-white"
+          disabled={page === totalPages}
+          onClick={() => setPage(page + 1)}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

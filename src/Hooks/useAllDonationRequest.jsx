@@ -1,20 +1,21 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "./useAxiosSecure";
 
-const useAllDonationRequest = () => {
+const useAllDonationRequest = (page, limit) => {
   const axiosSecure = useAxiosSecure();
-  const {
-    data: allBloodReq,
-    refetch,
-    isLoading,
-  } = useQuery({
-    queryKey: ["all-blood-request"],
+
+  const { data, refetch, isLoading } = useQuery({
+    queryKey: ["all-blood-request", page, limit],
     queryFn: async () => {
-      const res = await axiosSecure.get("/all-blood-req");
+      const res = await axiosSecure.get(
+        `/all-blood-req?page=${page}&limit=${limit}`
+      );
       return res.data;
     },
   });
-  return [allBloodReq, refetch, isLoading];
+
+  return { data, refetch, isLoading };
 };
 
 export default useAllDonationRequest;

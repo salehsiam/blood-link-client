@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import useAllDonationRequest from "../../../Hooks/useAllDonationRequest";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
@@ -8,16 +9,23 @@ import Loading from "../../Shared-Components/Loading";
 import useAdmin from "../../../Hooks/useAdmin";
 
 const AllBloodDonation = () => {
-  const [allBloodReq, refetch, isLoading] = useAllDonationRequest();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const { data, refetch, isLoading } = useAllDonationRequest(
+    currentPage,
+    itemsPerPage
+  );
+  const allBloodReq = data?.result || [];
+  const totalPages = data?.totalPages || 1;
+
   const [isAdmin] = useAdmin();
   const axiosSecure = useAxiosSecure();
+
   const updateStatus = async (id, newStatus) => {
     axiosSecure
-      .patch(`/set-status/${id}`, {
-        status: newStatus,
-      })
+      .patch(`/set-status/${id}`, { status: newStatus })
       .then((res) => {
-        console.log(res.data);
         refetch();
       });
   };
@@ -34,28 +42,24 @@ const AllBloodDonation = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/blood-request/${id}`).then((res) => {
-          console.log(res.data);
           refetch();
           if (res.data.deletedCount > 0) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Blood request deleted.",
-              icon: "success",
-            });
+            Swal.fire("Deleted!", "Blood request deleted.", "success");
           }
         });
       }
     });
   };
+
   if (isLoading) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
+
   return (
-    <div>
-      <h2 className="text-2xl">All Donation Request: </h2>
+    <div className="mt-16 px-8">
+      <h2 className="text-2xl mb-6">All Donation Requests:</h2>
       <div className="overflow-x-auto min-h-screen">
         <table className="table table-zebra">
-          {/* head */}
           <thead>
             <tr>
               <th></th>
@@ -70,36 +74,25 @@ const AllBloodDonation = () => {
             </tr>
           </thead>
           <tbody>
-            {allBloodReq?.map((singleRequest, idx) => (
+            {allBloodReq.map((singleRequest, idx) => (
               <tr key={singleRequest._id}>
                 <th>{idx + 1}</th>
                 <td>{singleRequest.recipient_name}</td>
-                <td>
-                  {singleRequest.recipient_upazila},{" "}
-                  {singleRequest.recipient_zila}
-                </td>
+                <td>{`${singleRequest.recipient_upazila}, ${singleRequest.recipient_zila}`}</td>
                 <td>{format(new Date(singleRequest.date), "P")}</td>
                 <td>{singleRequest.time}</td>
                 <td>{singleRequest.bloodGroup}</td>
                 <td>{singleRequest.status}</td>
                 <td>
-                  <p>Name: {singleRequest?.donor_name}</p>
-                  <p>Email: {singleRequest?.donor_email}</p>
+                  <p>Name: {singleRequest.donor_name}</p>
+                  <p>Email: {singleRequest.donor_email}</p>
                 </td>
                 <td>
                   <div className="dropdown dropdown-end">
-                    {/* Three-dot menu button */}
                     <label tabIndex={0} className="btn btn-ghost">
-                      <span className="material-icons">
-                        <BsThreeDotsVertical />
-                      </span>
+                      <BsThreeDotsVertical />
                     </label>
-
-                    {/* Dropdown menu */}
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu p-2 shadow bg-base-100 z-40 rounded-box w-52"
-                    >
+                    <ul className="dropdown-content menu p-2 shadow bg-base-100 z-40 rounded-box w-52">
                       <li>
                         <button
                           onClick={() =>
@@ -117,7 +110,6 @@ const AllBloodDonation = () => {
                           }
                           disabled={singleRequest.status !== "inprogress"}
                         >
-                          {" "}
                           Cancel
                         </button>
                       </li>
@@ -153,6 +145,19 @@ const AllBloodDonation = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center mt-6 gap-2">
+        {[...Array(totalPages).keys()].map((page) => (
+          <button
+            key={page + 1}
+            className={`btn ${currentPage === page + 1 ? "btn-active" : ""}`}
+            onClick={() => setCurrentPage(page + 1)}
+          >
+            {page + 1}
+          </button>
+        ))}
       </div>
     </div>
   );

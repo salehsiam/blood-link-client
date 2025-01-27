@@ -16,15 +16,18 @@ const FundingPage = () => {
     });
   }, [userData.email]);
   return (
-    <div>
-      <Link to="/payment">
-        <button className="btn">Give Fund</button>
-      </Link>
+    <div className="py-24">
+      <div className="flex justify-between mb-4">
+        <h2 className="text-3xl font-semibold">Funding us</h2>
+        <Link to="/payment">
+          <button className="btn bg-red-600 text-white">Give Fund</button>
+        </Link>
+      </div>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
           <thead>
-            <tr>
+            <tr className="bg-red-600 text-white">
               <th></th>
               <th>Name</th>
               <th>TransactionId</th>

@@ -23,7 +23,7 @@ import Payment from "../Pages/FundingPage/Payment";
 import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/Blog/BlogDetails";
 import AdminDashboard from "../Pages/Dashboard/AdminDashboard/AdminDashboard";
-import useUsers from "../Hooks/useUsers";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -84,7 +84,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <UserDashboard></UserDashboard>,
+        element: <DashboardHome></DashboardHome>,
       },
       {
         path: "profile",

@@ -49,8 +49,8 @@ const ContentManagement = () => {
     });
   };
   return (
-    <div>
-      <div className="flex px-6 justify-between">
+    <div className="mx-8 mt-16">
+      <div className="flex px-6 justify-between ">
         <h2 className="text-4xl font-bold">Manage Blog</h2>
         <Link to="/dashboard/content-management/add-blog">
           <button className="btn btn-primary">Add Blog</button>
