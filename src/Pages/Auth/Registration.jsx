@@ -1,10 +1,10 @@
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
-import { useState, useEffect } from "react";
 import useAreaLocation from "../../Hooks/useAreaLocation";
-import bloodImg from "./../../assets/pngegg.png";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import bloodImg from "./../../assets/pngegg.png";
+
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
@@ -16,6 +16,10 @@ const Registration = () => {
   const [districts, upazilaData] = useAreaLocation();
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [filteredUpazilas, setFilteredUpazilas] = useState([]);
+  const [passwordError, setPasswordError] = useState("");
+
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
 
   const handleDistrictChange = (e) => {
     const districtName = e.target.value;
@@ -26,53 +30,66 @@ const Registration = () => {
       const upazilas = upazilaData.filter(
         (upazila) => upazila.district_id === district.id
       );
-      console.log("Filtered Upazilas:", upazilas);
       setFilteredUpazilas(upazilas);
     } else {
       setFilteredUpazilas([]);
     }
   };
 
-  const handleRegistration = (e) => {
+  const handleRegistration = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    const confirmPassword = form.confirmPassword.value;
     const bloodGroup = form.blood_group.value;
     const upazila = form.upazila.value;
     const imageFile = { image: form.image.files[0] };
 
-    axiosPublic
-      .post(image_hosting_api, imageFile, {
+    // Password Validation
+    if (!passwordRegex.test(password)) {
+      setPasswordError(
+        "Password must have at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character."
+      );
+      return;
+    }
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match!");
+      return;
+    }
+
+    setPasswordError(""); // Clear error if passwords match and meet the requirements
+
+    try {
+      const imageRes = await axiosPublic.post(image_hosting_api, imageFile, {
         headers: {
           "content-type": "multipart/form-data",
         },
-      })
-      .then((res) => {
-        if (res.data.success) {
-          const userData = {
-            name,
-            email,
-            bloodGroup,
-            districts: selectedDistrict,
-            upazila,
-            image: res.data.data.display_url,
-            role: "donor",
-            status: "active",
-          };
-          createUser(email, password).then((result) => {
-            updateUserProfile(name)
-              .then((result) => {
-                navigate("/");
-                axiosPublic.post("/users", userData).then((res) => {
-                  console.log(res.data);
-                });
-              })
-              .catch((error) => console.log(error));
-          });
-        }
       });
+
+      if (imageRes.data.success) {
+        const userData = {
+          name,
+          email,
+          bloodGroup,
+          districts: selectedDistrict,
+          upazila,
+          image: imageRes.data.data.display_url,
+          role: "donor",
+          status: "active",
+        };
+
+        await createUser(email, password);
+        await updateUserProfile(name);
+        await axiosPublic.post("/users", userData);
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
   };
 
   return (
@@ -96,6 +113,7 @@ const Registration = () => {
                 name="name"
                 placeholder="Name"
                 className="input input-bordered"
+                required
               />
             </div>
 
@@ -109,6 +127,7 @@ const Registration = () => {
                 name="email"
                 placeholder="Email"
                 className="input input-bordered"
+                required
               />
             </div>
 
@@ -122,7 +141,25 @@ const Registration = () => {
                 name="password"
                 placeholder="Password"
                 className="input input-bordered"
+                required
               />
+            </div>
+
+            {/* Confirm Password Input */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Confirm Password</span>
+              </label>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                className="input input-bordered"
+                required
+              />
+              {passwordError && (
+                <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+              )}
             </div>
 
             {/* Blood Group Select */}
@@ -174,7 +211,8 @@ const Registration = () => {
                 ))}
               </select>
             </div>
-            {/* image input */}
+
+            {/* Image Input */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Profile Image</span>
@@ -183,6 +221,7 @@ const Registration = () => {
                 type="file"
                 name="image"
                 className="file-input file-input-bordered w-full max-w-xs"
+                required
               />
             </div>
 

@@ -83,10 +83,11 @@ const CreateDonation = () => {
     });
   };
   return (
-    <div>
-      <h2 className="text-4xl text-center ">Create Donation</h2>
-
-      <div className="card w-full max-w-lg mx-auto">
+    <div className="mt-10">
+      <div className="card w-full max-w-lg mx-auto border border-red-300 mt-6">
+        <h2 className="text-4xl text-center mt-5 underline text-red-500 font-semibold ">
+          Create Donation Request
+        </h2>
         <form onSubmit={handleDonationRequest} className="card-body">
           {/* Requester Name Input */}
           <div className="form-control">
@@ -252,7 +253,7 @@ const CreateDonation = () => {
 
           {/* Submit Button */}
           <div className="form-control mt-6">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn bg-red-500 text-white">
               Request
             </button>
           </div>

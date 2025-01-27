@@ -24,7 +24,7 @@ const PendingDonationReq = () => {
     <div className="py-24">
       <h2 className="text-4xl mb-6">Pending Requests</h2>
       <div className="overflow-x-auto min-h-screen">
-        <table className="table table-zebra">
+        <table className="table table-zebra border border-red-500">
           <thead>
             <tr className="bg-red-600 text-white">
               <th></th>

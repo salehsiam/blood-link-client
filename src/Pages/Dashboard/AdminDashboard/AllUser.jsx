@@ -20,12 +20,12 @@ const AllUser = () => {
 
   return (
     <div className="mt-16 px-6">
-      <h2 className="text-2xl">All Users: {totalUsers}</h2>
+      <h2 className="text-4xl mb-6">All Users: {totalUsers}</h2>
       <div className="overflow-x-auto ">
-        <table className="table">
+        <table className="table border border-red-500">
           {/* Table header */}
           <thead>
-            <tr>
+            <tr className="bg-red-500 text-white">
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>

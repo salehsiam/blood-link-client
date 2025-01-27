@@ -25,9 +25,13 @@ const AdminDashboard = () => {
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Welcome Section */}
       <div className=" p-6 rounded-lg text-center">
-        <h1 className="text-3xl font-bold text-gray-800">
+        <h2 className="text-3xl font-bold text-gray-800">
           Welcome <span className="text-red-500">{user?.displayName}</span>
-        </h1>
+        </h2>
+        <p className="text-lg text-green-600 my-6">
+          You have the power to manage and grow this platform. Let’s save lives
+          together by ensuring smooth operations and efficient management.
+        </p>
       </div>
 
       {/* Statistics Section */}

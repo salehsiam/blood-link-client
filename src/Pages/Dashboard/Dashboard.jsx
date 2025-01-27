@@ -2,6 +2,10 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import useVolunteer from "../../Hooks/useVolunteer";
 import useAuth from "../../Hooks/useAuth";
+import { FaBlog, FaHome } from "react-icons/fa";
+import { FaUser } from "react-icons/fa6";
+import { MdBloodtype, MdCreate, MdRequestPage } from "react-icons/md";
+import { RiFundsFill } from "react-icons/ri";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -47,7 +51,7 @@ const Dashboard = () => {
           <div>
             <h2
               onClick={() => {
-                navigate("/");
+                navigate("/dashboard");
               }}
               className="text-2xl font-semibold cursor-pointer text-center"
             >
@@ -56,19 +60,23 @@ const Dashboard = () => {
             {isAdmin && (
               <ul className="menu p-4">
                 <li>
-                  <NavLink to="/dashboard/profile">Profile</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/dashboard/all-blood-donation-request">
-                    All Donation Request
+                  <NavLink to="/dashboard/profile">
+                    <FaUser></FaUser> Profile
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/all-users">All User</NavLink>
+                  <NavLink to="/dashboard/all-blood-donation-request">
+                    <MdBloodtype></MdBloodtype> All Donation Request
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/all-users">
+                    <FaUser></FaUser> All User
+                  </NavLink>
                 </li>
                 <li>
                   <NavLink to="/dashboard/content-management">
-                    Content Management
+                    <FaBlog></FaBlog> Content Management
                   </NavLink>
                 </li>
               </ul>
@@ -76,16 +84,18 @@ const Dashboard = () => {
             {isVolunteer && (
               <ul className="menu p-4">
                 <li>
-                  <NavLink to="/dashboard/profile">Profile</NavLink>
+                  <NavLink to="/dashboard/profile">
+                    <FaUser></FaUser> Profile
+                  </NavLink>
                 </li>
                 <li>
                   <NavLink to="/dashboard/all-blood-donation-request">
-                    All Donation Request
+                    <MdBloodtype></MdBloodtype> All Donation Request
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/dashboard/content-management">
-                    Content Management
+                    <FaBlog></FaBlog> Content Management
                   </NavLink>
                 </li>
               </ul>
@@ -94,16 +104,18 @@ const Dashboard = () => {
             {!isAdmin && !isVolunteer && (
               <ul className="menu p-4">
                 <li>
-                  <NavLink to="/dashboard/profile">Profile</NavLink>
+                  <NavLink to="/dashboard/profile">
+                    <FaUser></FaUser> Profile
+                  </NavLink>
                 </li>
                 <li>
                   <NavLink to="/dashboard/my-donation-request">
-                    My Donation Request
+                    <MdRequestPage></MdRequestPage> My Donation Request
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/dashboard/create-donation-request">
-                    Create Donation Request
+                    <MdCreate></MdCreate> Create Donation Request
                   </NavLink>
                 </li>
               </ul>
@@ -113,13 +125,26 @@ const Dashboard = () => {
           <div>
             <ul className="menu">
               <li>
-                <NavLink to="/donation-request">Donation Request</NavLink>
+                <NavLink to="/">
+                  <FaHome></FaHome> Home
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/blogs">Blog</NavLink>
+                <NavLink to="/donation-request">
+                  <MdBloodtype />
+                  Donation Request
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/funding">Give Fund</NavLink>
+                <NavLink to="/blogs">
+                  {" "}
+                  <FaBlog></FaBlog>Blog
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/funding">
+                  <RiFundsFill></RiFundsFill> Give Fund
+                </NavLink>
               </li>
               {!user && (
                 <li>

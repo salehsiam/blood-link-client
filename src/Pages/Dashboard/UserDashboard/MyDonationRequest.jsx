@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import useDonationRequest from "../../../Hooks/useDonationRequest";
 import { MdCancel } from "react-icons/md";
@@ -11,6 +12,7 @@ import Loading from "../../Shared-Components/Loading";
 const MyDonationRequest = () => {
   const [bloodRequest, refetch, isLoading, setPage, page, limit] =
     useDonationRequest();
+  const [filterStatus, setFilterStatus] = useState(""); // State for filter
   const axiosSecure = useAxiosSecure();
 
   const updateStatus = async (id, newStatus) => {
@@ -44,19 +46,43 @@ const MyDonationRequest = () => {
     });
   };
 
+  const filteredRequests = filterStatus
+    ? bloodRequest.data.filter(
+        (request) => request.status.toLowerCase() === filterStatus.toLowerCase()
+      )
+    : bloodRequest.data;
+
   if (isLoading) {
     return <Loading />;
   }
 
   return (
     <div className="my-8 px-6">
-      <h2 className="text-2xl">
-        My Donation Requests: {bloodRequest.data.length}
-      </h2>
+      <div className="flex justify-between mb-4">
+        <h2 className="text-3xl text-center">
+          My Donation Requests: {filteredRequests.length}
+        </h2>
+
+        {/* Filter Dropdown */}
+        <div className="flex justify-end">
+          <select
+            className="select select-bordered w-full max-w-xs"
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+          >
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="inprogress">In Progress</option>
+            <option value="done">Done</option>
+            <option value="canceled">Canceled</option>
+          </select>
+        </div>
+      </div>
+
       <div className="overflow-x-auto min-h-screen">
-        <table className="table table-zebra">
+        <table className="table table-zebra border border-red-500">
           <thead>
-            <tr>
+            <tr className="bg-red-500 text-white">
               <th></th>
               <th>Recipient Name</th>
               <th>Recipient Address</th>
@@ -69,7 +95,7 @@ const MyDonationRequest = () => {
             </tr>
           </thead>
           <tbody>
-            {bloodRequest.data.map((singleRequest, idx) => (
+            {filteredRequests.map((singleRequest, idx) => (
               <tr key={singleRequest._id}>
                 <th>{idx + 1}</th>
                 <td>{singleRequest.recipient_name}</td>

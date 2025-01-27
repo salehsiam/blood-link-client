@@ -24,7 +24,7 @@ const FundingPage = () => {
         </Link>
       </div>
       <div className="overflow-x-auto">
-        <table className="table table-zebra">
+        <table className="table table-zebra border border-red-500">
           {/* head */}
           <thead>
             <tr className="bg-red-600 text-white">

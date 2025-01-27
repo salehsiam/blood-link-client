@@ -59,9 +59,9 @@ const AllBloodDonation = () => {
     <div className="mt-16 px-8">
       <h2 className="text-2xl mb-6">All Donation Requests:</h2>
       <div className="overflow-x-auto min-h-screen">
-        <table className="table table-zebra">
+        <table className="table table-zebra border border-red-500">
           <thead>
-            <tr>
+            <tr className="bg-red-600 text-white">
               <th></th>
               <th>Recipient Name</th>
               <th>Recipient Address</th>

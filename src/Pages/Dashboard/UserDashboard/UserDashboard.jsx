@@ -59,11 +59,18 @@ const UserDashboard = () => {
 
   return (
     <div className="px-4 my-8">
-      <h2 className="text-3xl mb-3 font-semibold">Welcome {userData.name}</h2>
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold  mb-4">Welcome {userData.name}</h2>
+        <p className="text-lg lg:w-2/3 mb-6 mx-auto">
+          Thank you for being part of our life-saving community. You can
+          contribute to saving lives or manage your profile here.
+        </p>
+      </div>
+
       <div className="overflow-x-auto min-h-screen">
-        <table className="table table-zebra">
+        <table className="table table-zebra border border-red-500 mb-8">
           <thead>
-            <tr>
+            <tr className="bg-red-500 text-white">
               <th></th>
               <th>Recipient Name</th>
               <th>Recipient Address</th>
@@ -153,6 +160,13 @@ const UserDashboard = () => {
             ))}
           </tbody>
         </table>
+        <div className="flex justify-center">
+          <Link to="/dashboard/my-donation-request">
+            <button className="btn bg-red-500 text-white">
+              View my all request
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

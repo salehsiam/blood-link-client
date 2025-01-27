@@ -143,9 +143,9 @@ const Profile = () => {
   }
 
   return (
-    <div className="container mx-auto mt-16 p-8">
+    <div className="container mx-auto mt-16 p-8 ">
       <h1 className="text-2xl text-center font-bold mb-4">My Profile</h1>
-      <div className="bg-white shadow-md rounded-lg p-6">
+      <div className="bg-white shadow-md rounded-lg p-6 border border-red-200">
         {!isEditing ? (
           // Display mode
           <div>
