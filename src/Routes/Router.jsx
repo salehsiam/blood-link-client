@@ -70,17 +70,29 @@ const router = createBrowserRouter([
       },
       {
         path: "/funding",
-        element: <FundingPage></FundingPage>,
+        element: (
+          <PrivateRoute>
+            <FundingPage></FundingPage>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/payment",
-        element: <Payment></Payment>,
+        element: (
+          <PrivateRoute>
+            <Payment></Payment>
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
     path: "/dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard",
