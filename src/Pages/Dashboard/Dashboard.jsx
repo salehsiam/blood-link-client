@@ -6,6 +6,7 @@ import { FaBlog, FaHome } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import { MdBloodtype, MdCreate, MdRequestPage } from "react-icons/md";
 import { RiFundsFill } from "react-icons/ri";
+import Footer from "../Shared-Components/Footer";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const Dashboard = () => {
         </div>
         {/* Page content here */}
         <Outlet></Outlet>
+        <Footer></Footer>
       </div>
       <div className="drawer-side">
         <label
