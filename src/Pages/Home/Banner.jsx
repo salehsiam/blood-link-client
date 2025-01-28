@@ -5,7 +5,7 @@ const Banner = () => {
   const navigate = useNavigate();
   return (
     <div
-      className="relative flex items-center w-full h-[620px]"
+      className="relative flex flex-col lg:flex-row justify-center items-center w-full h-[620px]"
       style={{
         backgroundImage: `url('${bloodCell}')`,
         backgroundSize: "cover",
