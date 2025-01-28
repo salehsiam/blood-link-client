@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../Pages/Shared-Components/Navbar";
+import Footer from "../Pages/Shared-Components/Footer";
 
 const MainLayout = () => {
   return (
@@ -10,6 +11,7 @@ const MainLayout = () => {
       <main className="max-w-7xl mx-auto">
         <Outlet></Outlet>
       </main>
+      <Footer></Footer>
     </div>
   );
 };
