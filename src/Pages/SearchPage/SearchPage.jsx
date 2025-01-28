@@ -61,7 +61,7 @@ const SearchPage = () => {
         onSubmit={handleSearch}
         className="bg-white shadow-md p-6 rounded-lg"
       >
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="form-control">
             <label className="label">Blood Group</label>
             <select
@@ -133,7 +133,7 @@ const SearchPage = () => {
         {loading ? (
           <p>Loading...</p>
         ) : searchResults.length > 0 ? (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {searchResults.map((result) => (
               <div
                 key={result._id}
