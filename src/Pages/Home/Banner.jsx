@@ -13,7 +13,7 @@ const Banner = () => {
       }}
     >
       <div className="w-1/2"></div>
-      <div className=" w-1/2  ">
+      <div className=" lg:w-1/2 pl-4 ">
         <h1 className="text-3xl  md:text-5xl text-white font-bold mb-4">
           Save Life Donate <br /> Blood
         </h1>
