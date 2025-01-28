@@ -164,7 +164,7 @@ const Profile = () => {
                 <FaEdit />
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="font-bold">Name:</p>
                 <p>{userData.name || "N/A"}</p>
