@@ -99,9 +99,7 @@ const Navbar = () => {
             <li>
               <NavLink to="/dashboard">Dashboard</NavLink>
             </li>
-            <li>
-              <button onClick={handleLogout}>Logout</button>
-            </li>
+            <li>{user && <button onClick={handleLogout}>Logout</button>}</li>
           </ul>
         </div>
       </div>
