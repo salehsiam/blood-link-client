@@ -10,6 +10,7 @@ const AddBlogPage = () => {
   const [title, setTitle] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [content, setContent] = useState("");
+  const [post, setPost] = useState(false);
 
   const handleThumbnailUpload = async (file) => {
     const formData = new FormData();
@@ -24,6 +25,7 @@ const AddBlogPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setPost(true);
 
     if (!title || !thumbnail || !content) {
       alert("All fields are required!");
@@ -37,11 +39,13 @@ const AddBlogPage = () => {
         thumbnail: imageUrl,
         content,
         status: "draft",
+        createdAt: new Date(),
       };
       console.log(blogData);
 
       const response = await axiosPublic.post("/blogs", blogData);
       if (response.data.insertedId) {
+        setPost(false);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -55,6 +59,7 @@ const AddBlogPage = () => {
       }
     } catch (error) {
       console.error("Error creating blog:", error);
+      setPost(false);
     }
   };
 
@@ -95,7 +100,7 @@ const AddBlogPage = () => {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          Create Blog
+          {post ? "Creating" : "Create Blog"}
         </button>
       </form>
     </div>

@@ -17,6 +17,7 @@ const Registration = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [filteredUpazilas, setFilteredUpazilas] = useState([]);
   const [passwordError, setPasswordError] = useState("");
+  const [registration, setRegistration] = useState(false);
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
@@ -38,6 +39,7 @@ const Registration = () => {
 
   const handleRegistration = async (e) => {
     e.preventDefault();
+    setRegistration(true);
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
@@ -85,10 +87,12 @@ const Registration = () => {
         await createUser(email, password);
         await updateUserProfile(name);
         await axiosPublic.post("/users", userData);
+        setRegistration(false);
         navigate("/");
       }
     } catch (error) {
       console.error("Error during registration:", error);
+      setRegistration(false);
     }
   };
 
@@ -228,7 +232,7 @@ const Registration = () => {
             {/* Submit Button */}
             <div className="form-control mt-6">
               <button type="submit" className="btn btn-primary">
-                Sign Up
+                {registration ? "Registering" : "Register"}
               </button>
             </div>
           </form>

@@ -61,25 +61,26 @@ const ContentManagement = () => {
         {blogs.map((blog) => (
           <div
             key={blog._id}
-            className="flex flex-col gap-8 max-w-[440px] mx-auto  shadow-md p-4"
+            className="flex flex-col gap-1 max-w-sm mx-auto  shadow-md p-4"
           >
-            <div>
+            <div className="h-40">
               <img
                 src={blog.thumbnail}
                 alt={blog.title}
-                className="w-full h-52 object-cover rounded-md"
+                className="w-full h-full object-cover rounded-md"
               />
             </div>
             <div className="grow">
-              <h2 className="text-xl font-bold mt-2">{blog.title}</h2>
+              <h2 className="text-md font-bold mt-2">{blog.title}</h2>
               <p
+                className="text-sm"
                 dangerouslySetInnerHTML={{
-                  __html: blog.content.substring(0, 200) + "...",
+                  __html: blog.content.substring(0, 150) + "...",
                 }}
               ></p>
             </div>
             {isAdmin && (
-              <div className="mt-2 flex gap-2">
+              <div className=" flex gap-2">
                 {blog.status === "draft" ? (
                   <button
                     disabled={!isAdmin}

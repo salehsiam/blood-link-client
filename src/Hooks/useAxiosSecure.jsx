@@ -2,7 +2,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 export const axiosSecure = axios.create({
-  baseURL: "https://bloodlink-server-flax.vercel.app",
+  baseURL: "http://localhost:5000",
+  // https://bloodlink-server-flax.vercel.app
 });
 
 const useAxiosSecure = () => {
