@@ -4,23 +4,26 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 import SectionTitle from "../Shared-Components/SectionTitle";
+import Loading from "../Shared-Components/Loading";
 
 const DonationDetails = () => {
-  const { id } = useParams(); // Get donation request ID from URL
+  const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [requestDetails, setRequestDetails] = useState({});
-
-  // Fetch donation request details
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   useEffect(() => {
     axiosSecure
       .get(`/blood-request/${id}`)
       .then((res) => setRequestDetails(res.data))
       .catch((err) => console.error(err));
+    setLoading(false);
   }, [id, axiosSecure]);
 
-  // Handle confirm donation
   const handleConfirmDonation = () => {
     const donor_email = user?.email;
     const donor_name = user?.displayName;
@@ -48,55 +51,66 @@ const DonationDetails = () => {
       })
       .catch((err) => console.error(err));
   };
+  if (loading) <Loading />;
 
   return (
     <div className="container mx-auto px-6 py-24">
       <SectionTitle
-        heading="View details & confirm donation"
-        subHeading="Donation Request"
+        heading="Donation Request Details"
+        subHeading="View & Confirm"
       />
-      <div className="h-screen w-full   flex flex-col items-center justify-center p-8">
-        <div className=" shadow-lg p-8 rounded-lg max-w-4xl w-full">
-          <div className="space-y-4">
-            <h2 className="text-2xl">
-              Recipient Name: <strong> {requestDetails.recipient_name}</strong>
-            </h2>
-            <p>
+      <div className="flex justify-center">
+        <div className="bg-white shadow-xl rounded-xl p-8 max-w-3xl w-full border border-red-200">
+          <h2 className="text-3xl font-semibold text-red-600 mb-4 text-center">
+            Recipient: {requestDetails.recipient_name}
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 text-lg">
+            <div className="p-4 bg-red-50 border-l-4 border-red-500 rounded-md shadow-sm">
               <strong>Blood Group:</strong> {requestDetails.bloodGroup}
-            </p>
-            <p>
+            </div>
+            <div className="p-4 bg-gray-100 rounded-md">
               <strong>District:</strong> {requestDetails.recipient_zila}
-            </p>
-            <p>
+            </div>
+            <div className="p-4 bg-gray-100 rounded-md">
               <strong>Upazila:</strong> {requestDetails.recipient_upazila}
-            </p>
-            <p>
+            </div>
+            <div className="p-4 bg-gray-100 rounded-md">
               <strong>Hospital:</strong> {requestDetails.hospital_name}
-            </p>
-            <p>
+            </div>
+            <div className="p-4 bg-gray-100 rounded-md md:col-span-2">
               <strong>Address:</strong> {requestDetails.address}
-            </p>
-            <p>
+            </div>
+            <div className="p-4 bg-red-50 border-l-4 border-red-500 rounded-md">
               <strong>Date:</strong>{" "}
               {new Date(requestDetails.date).toDateString()}
-            </p>
-            <p>
+            </div>
+            <div className="p-4 bg-red-50 border-l-4 border-red-500 rounded-md">
               <strong>Time:</strong> {requestDetails.time}
-            </p>
-            <p>
-              <strong>Status:</strong> {requestDetails.status}
-            </p>
-
-            {/* Donate Button */}
-            {requestDetails.status === "pending" && (
-              <button
-                className="btn bg-red-600 text-white hover:bg-red-700 transition duration-300 mt-6 w-full"
-                onClick={() => setIsModalOpen(true)}
+            </div>
+            <div className="p-4 bg-red-100 rounded-md md:col-span-2">
+              <strong>Status:</strong>{" "}
+              <span
+                className={`font-semibold ${
+                  requestDetails.status === "pending"
+                    ? "text-yellow-600"
+                    : "text-green-600"
+                }`}
               >
-                Donate
-              </button>
-            )}
+                {requestDetails.status}
+              </span>
+            </div>
           </div>
+
+          {/* Donate Button */}
+          {requestDetails.status === "pending" && (
+            <button
+              className="btn bg-red-600 text-white hover:bg-red-700 transition duration-300 mt-8 w-full"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Donate Now
+            </button>
+          )}
         </div>
       </div>
 
