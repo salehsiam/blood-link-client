@@ -123,7 +123,7 @@ const Profile = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="container mx-auto mt-20 p-6">
+    <div className="container mx-auto mt-12 p-6">
       <SectionTitle
         heading="My Profile"
         subheading="Manage your personal information and blood donation preferences"
@@ -136,13 +136,14 @@ const Profile = () => {
               <img
                 src={imagePreview}
                 alt="Avatar"
-                className="w-36 h-36 object-cover rounded-full border"
+                className="w-32 h-32 object-cover rounded-full border"
               />
               <button
                 className="btn btn-sm btn-outline"
                 onClick={() => setIsEditing(true)}
               >
-                <FaEdit className="mr-2" /> Edit Profile
+                <FaEdit className="mr-2" />{" "}
+                <span className="hidden md:block">Edit Profile</span>
               </button>
             </div>
 

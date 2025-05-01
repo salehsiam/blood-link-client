@@ -61,11 +61,11 @@ const DonationDetails = () => {
       />
       <div className="flex justify-center">
         <div className="bg-white shadow-xl rounded-xl p-8 max-w-3xl w-full border border-red-200">
-          <h2 className="text-3xl font-semibold text-red-600 mb-4 text-center">
+          <h2 className="md:text-3xl text-2xl font-semibold text-red-600 mb-4 text-center">
             Recipient: {requestDetails.recipient_name}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 text-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 text-md">
             <div className="p-4 bg-red-50 border-l-4 border-red-500 rounded-md shadow-sm">
               <strong>Blood Group:</strong> {requestDetails.bloodGroup}
             </div>

@@ -8,9 +8,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#e53935", // Primary Red
-        secondary: "#fff7f7", // Secondary Light
-        accent: "#1976d2", // Accent Blue (or change to #00b894)
+        primary: "#e53935",
+        secondary: "#fff7f7",
+        accent: "#1976d2",
       },
     },
   },
@@ -21,12 +21,12 @@ export default {
         light: {
           primary: "#e53935",
           secondary: "#fff7f7",
-          accent: "#1976d2", // Change to #00b894 if preferred
+          accent: "#1976d2",
           neutral: "#3D4451",
           "base-100": "#FFFFFF",
         },
       },
     ],
-    dark: false, // disables dark theme switching
+    dark: false,
   },
 };

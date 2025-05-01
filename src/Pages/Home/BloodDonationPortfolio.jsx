@@ -10,12 +10,12 @@ import SectionTitle from "../Shared-Components/SectionTitle";
 
 const BloodDonationPortfolio = () => {
   return (
-    <section className="py-12 bg-gray-50 text-center">
+    <section className="py-12  text-center">
       <SectionTitle
         subHeading="Our Heroes in Action"
         heading="Highlights from our donation journey."
       />
-      <div className="mt-8 grid grid-cols-1 *:object-cover *:w-full sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="mt-8 grid  *:object-cover *:w-full grid-cols-2 md:grid-cols-4 gap-6">
         <img
           src={bloodDonation1}
           alt="Blood donation event"

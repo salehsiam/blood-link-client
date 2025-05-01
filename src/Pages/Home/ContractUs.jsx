@@ -10,7 +10,7 @@ const ContactUs = () => {
   };
 
   return (
-    <section className="p-6 bg-gray-50 rounded-lg shadow-lg">
+    <section className="  rounded-lg shadow-lg">
       <SectionTitle
         heading="Have questions or need help?"
         subHeading="Get in Touch "

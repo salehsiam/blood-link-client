@@ -39,11 +39,11 @@ const BlogDetails = () => {
                 : "No Date"}
             </p>
 
-            <p className="text-sm flex items-center gap-1">
+            {/* <p className="text-sm flex items-center gap-1">
               {" "}
               <FaCalendarAlt></FaCalendarAlt>
               {format(new Date(singleBlog?.createdAt), "MMMM dd, yyyy")}
-            </p>
+            </p> */}
           </div>
           <img
             src={singleBlog.thumbnail}
