@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Loading from "../../Shared-Components/Loading";
+import SectionTitle from "../../Shared-Components/SectionTitle";
 
 const MyDonationRequest = () => {
   const [bloodRequest, refetch, isLoading, setPage, page, limit] =
@@ -59,9 +60,7 @@ const MyDonationRequest = () => {
   return (
     <div className="my-8 px-6">
       <div className="flex justify-between mb-4">
-        <h2 className="text-3xl text-center">
-          My Donation Requests: {filteredRequests.length}
-        </h2>
+        <SectionTitle heading="My Donations" subHeading="Donation Request" />
 
         {/* Filter Dropdown */}
         <div className="flex justify-end">

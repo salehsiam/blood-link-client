@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import useUsers from "../../../Hooks/useUsers";
+import SectionTitle from "../../Shared-Components/SectionTitle";
 
 const UserDashboard = () => {
   const axiosSecure = useAxiosSecure();
@@ -56,18 +57,39 @@ const UserDashboard = () => {
       }
     });
   };
+  console.log(userData);
 
   return (
     <div className="px-4 my-8">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold  mb-4">Welcome {userData.name}</h2>
-        <p className="text-lg lg:w-2/3 mb-6 mx-auto">
-          Thank you for being part of our life-saving community. You can
-          contribute to saving lives or manage your profile here.
-        </p>
+      <div
+        className=" h-[180px] md:h-[250px] bg-cover bg-center  rounded-xl shadow-md overflow-hidden bg-white"
+        style={{
+          backgroundImage: `linear-gradient(rgb(1, 152, 182), rgba(1, 152, 182, 0.7)), url(${
+            userData?.image || "https://i.imgur.com/8Km9tLL.png"
+          })`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className=" inset-0 flex items-center justify-center">
+          <div className="text-center p-6 flex flex-col items-center gap-4">
+            <img
+              src={userData?.image || ""}
+              alt={user?.displayName || "User"}
+              className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
+            />
+            <h1 className="text-xl md:text-4xl font-bold text-white mb-2">
+              Welcome Back, {user?.displayName?.split(" ")[0] || "User"}!
+            </h1>
+          </div>
+        </div>
       </div>
 
-      <div className="overflow-x-auto min-h-screen">
+      {/* <div className="mt-8">
+        <SectionTitle heading="Latest Request" />
+      </div> */}
+
+      <div className="overflow-x-auto min-h-screen mt-6">
         <table className="table table-zebra border border-red-500 mb-8">
           <thead>
             <tr className="bg-red-500 text-white">

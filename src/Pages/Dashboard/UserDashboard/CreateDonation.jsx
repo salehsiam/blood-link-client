@@ -7,6 +7,7 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import useUsers from "../../../Hooks/useUsers";
+import SectionTitle from "../../Shared-Components/SectionTitle";
 
 const CreateDonation = () => {
   const [districts, upazilaData] = useAreaLocation();
@@ -84,177 +85,174 @@ const CreateDonation = () => {
   };
   return (
     <div className="mt-10 px-6">
-      <div className="card w-full max-w-lg mx-auto border border-red-300 mt-6">
-        <h2 className="text-4xl text-center mt-5 underline text-red-500 font-semibold ">
-          Create Donation Request
-        </h2>
-        <form onSubmit={handleDonationRequest} className="card-body">
-          {/* Requester Name Input */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Requester Name</span>
-            </label>
-            <input
-              type="text"
-              defaultValue={user?.displayName}
-              name="requester_name"
-              placeholder="Requester Name"
-              className="input input-bordered"
-              readOnly
-            />
-          </div>
-          {/*Requester Email Input */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Requester Email</span>
-            </label>
-            <input
-              type="email"
-              defaultValue={user?.email}
-              name="requester_email"
-              placeholder="Requester Email"
-              className="input input-bordered"
-              readOnly
-            />
-          </div>
-          {/* Recipient Name */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Recipient Name</span>
-            </label>
-            <input
-              type="text"
-              name="recipient_name"
-              placeholder="Recipient Name"
-              className="input input-bordered"
-              required
-            />
-          </div>
-
-          {/* District Select */}
-          <div className="form-control">
-            <label>Recipient District</label>
-            <select
-              name="districts"
-              onChange={handleDistrictChange}
-              value={selectedDistrict}
-              className="select select-bordered"
-              required
-            >
-              <option value="">-- Select a District --</option>
-              {districts.map((district) => (
-                <option key={district.id} value={district.name}>
-                  {district.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Upazila Select */}
-          <div className="form-control">
-            <label>Recipient Upazila</label>
-            <select
-              name="upazila"
-              className="select select-bordered"
-              disabled={!selectedDistrict}
-              required
-            >
-              <option value="">-- Select Upazila --</option>
-              {filteredUpazilas.map((upazila) => (
-                <option key={upazila.id} value={upazila.name}>
-                  {upazila.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* Hospital Name */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Hospital Name</span>
-            </label>
-            <input
-              type="text"
-              name="hospital_name"
-              placeholder="Hospital Name"
-              className="input input-bordered"
-              required
-            />
-          </div>
-          {/* Address */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Full Address</span>
-            </label>
-            <input
-              type="text"
-              name="address"
-              placeholder="Full Address"
-              className="input input-bordered"
-              required
-            />
-          </div>
-
-          {/* Blood Group Select */}
-          <div className="form-control">
-            <label>Blood Group</label>
-            <select
-              required
-              name="blood_group"
-              className="select select-bordered"
-            >
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-            </select>
-          </div>
-          <div className="flex gap-4">
-            {/* Time */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Select Time</span>
+      <SectionTitle
+        heading="Fill in the necessary details"
+        subHeading="Make a Donation Request"
+      />
+      <div className=" max-w-3xl mx-auto p-4 ">
+        <form onSubmit={handleDonationRequest} className="space-y-6">
+          {/* Requester Info */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="label-text font-semibold">Requester Name</label>
+              <input
+                type="text"
+                defaultValue={user?.displayName}
+                name="requester_name"
+                className="input input-bordered w-full bg-gray-50"
+                readOnly
+              />
+            </div>
+            <div>
+              <label className="label-text font-semibold">
+                Requester Email
               </label>
               <input
-                type="time"
-                name="time"
-                className="input input-bordered"
+                type="email"
+                defaultValue={user?.email}
+                name="requester_email"
+                className="input input-bordered w-full bg-gray-50"
+                readOnly
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Recipient Name */}
+            <div>
+              <label className="label-text font-semibold">Recipient Name</label>
+              <input
+                type="text"
+                name="recipient_name"
+                className="input input-bordered w-full"
+                placeholder="Recipient Name"
                 required
               />
             </div>
-            {/* Date */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Select Date</span>
+            {/* Blood Group */}
+            <div>
+              <label className="label-text font-semibold">Blood Group</label>
+              <select
+                name="blood_group"
+                className="select select-bordered w-full"
+                required
+              >
+                <option value="">-- Select Blood Group --</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+          </div>
+          {/* Location */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="label-text font-semibold">
+                Recipient District
               </label>
+              <select
+                name="districts"
+                onChange={handleDistrictChange}
+                value={selectedDistrict}
+                className="select select-bordered w-full"
+                required
+              >
+                <option value="">-- Select a District --</option>
+                {districts.map((district) => (
+                  <option key={district.id} value={district.name}>
+                    {district.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="label-text font-semibold">
+                Recipient Upazila
+              </label>
+              <select
+                name="upazila"
+                className="select select-bordered w-full"
+                disabled={!selectedDistrict}
+                required
+              >
+                <option value="">-- Select Upazila --</option>
+                {filteredUpazilas.map((upazila) => (
+                  <option key={upazila.id} value={upazila.name}>
+                    {upazila.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Hospital + Address */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="label-text font-semibold">Hospital Name</label>
+              <input
+                type="text"
+                name="hospital_name"
+                className="input input-bordered w-full"
+                placeholder="Hospital Name"
+                required
+              />
+            </div>
+            <div>
+              <label className="label-text font-semibold">Full Address</label>
+              <input
+                type="text"
+                name="address"
+                className="input input-bordered w-full"
+                placeholder="Full Address"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Date + Time */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="label-text font-semibold">Select Time</label>
+              <input
+                type="time"
+                name="time"
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+            <div className="flex flex-col justify-center">
+              <label className="label-text font-semibold">Select Date</label>
               <DatePicker
-                className="input input-bordered"
+                className="input input-bordered w-full"
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
                 required
               />
             </div>
           </div>
-          {/* Request Message */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Request Message</span>
-            </label>
+
+          {/* Message */}
+          <div>
+            <label className="label-text font-semibold">Request Message</label>
             <textarea
               name="request_message"
-              className="textarea textarea-bordered"
-              placeholder="Request Message"
+              className="textarea textarea-bordered w-full"
+              placeholder="Please explain the urgency of your request."
               required
             ></textarea>
           </div>
 
           {/* Submit Button */}
-          <div className="form-control mt-6">
-            <button type="submit" className="btn bg-red-500 text-white">
-              Request
+          <div className="text-center">
+            <button
+              type="submit"
+              className="btn bg-red-600 hover:bg-red-700 text-white text-lg w-full md:w-auto px-10 py-2"
+            >
+              Submit Request
             </button>
           </div>
         </form>
