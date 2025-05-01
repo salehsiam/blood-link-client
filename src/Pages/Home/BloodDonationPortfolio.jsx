@@ -6,15 +6,15 @@ import bloodDonation5 from "./../../assets/donation6.jpg";
 import bloodDonation6 from "./../../assets/donation7.jpg";
 import bloodDonation7 from "./../../assets/donation8.jpg";
 import bloodDonation8 from "./../../assets/donation5.jpg";
+import SectionTitle from "../Shared-Components/SectionTitle";
 
 const BloodDonationPortfolio = () => {
   return (
     <section className="py-12 bg-gray-50 text-center">
-      <h2 className="text-4xl font-bold text-gray-800">Our Impact</h2>
-      <p className="text-gray-600 max-w-2xl mx-auto mt-3">
-        Below are some of the heartfelt moments captured during our recent blood
-        donation drives. Every drop counts, and together, we are saving lives!
-      </p>
+      <SectionTitle
+        subHeading="Our Heroes in Action"
+        heading="Highlights from our donation journey."
+      />
       <div className="mt-8 grid grid-cols-1 *:object-cover *:w-full sm:grid-cols-2 md:grid-cols-4 gap-6">
         <img
           src={bloodDonation1}

@@ -1,5 +1,6 @@
 import { BiPhoneCall } from "react-icons/bi";
 import { FaAddressBook, FaAddressCard, FaLocationPin } from "react-icons/fa6";
+import SectionTitle from "../Shared-Components/SectionTitle";
 
 const ContactUs = () => {
   const handleSubmit = (e) => {
@@ -10,7 +11,10 @@ const ContactUs = () => {
 
   return (
     <section className="p-6 bg-gray-50 rounded-lg shadow-lg">
-      <h2 className="text-4xl font-bold text-center mb-6">Contact Us</h2>
+      <SectionTitle
+        heading="Have questions or need help?"
+        subHeading="Get in Touch "
+      ></SectionTitle>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Contact Form */}
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -66,7 +70,7 @@ const ContactUs = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-accent text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               Send Message
             </button>

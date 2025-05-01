@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import usePendingDonation from "../../Hooks/usePendingDonation";
 import Loading from "../Shared-Components/Loading";
 import { Link } from "react-router-dom";
+import SectionTitle from "../Shared-Components/SectionTitle";
 
 const PendingDonationReq = () => {
   const [page, setPage] = useState(1); // Current page
@@ -22,7 +23,10 @@ const PendingDonationReq = () => {
 
   return (
     <div className="py-24 px-6">
-      <h2 className="text-4xl mb-6">Pending Requests</h2>
+      <SectionTitle
+        subHeading="Donation Requests"
+        heading="Donation requests awaiting your action."
+      />
       <div className="overflow-x-auto min-h-screen">
         <table className="table table-zebra border border-red-500">
           <thead>

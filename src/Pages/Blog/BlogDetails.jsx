@@ -39,11 +39,11 @@ const BlogDetails = () => {
                 : "No Date"}
             </p>
 
-            {/* <p className="text-sm flex items-center gap-1">
+            <p className="text-sm flex items-center gap-1">
               {" "}
               <FaCalendarAlt></FaCalendarAlt>
               {format(new Date(singleBlog?.createdAt), "MMMM dd, yyyy")}
-            </p> */}
+            </p>
           </div>
           <img
             src={singleBlog.thumbnail}
@@ -57,7 +57,6 @@ const BlogDetails = () => {
           ></div>
         </div>
         <aside className="max-w-lg flex-1">
-          <h2 className="text-3xl mb-4 text-center">Recent Blogs</h2>
           <div className="space-y-4">
             {recentBlog.map((blog) => (
               <BlogCard key={blog._id} blog={blog}></BlogCard>

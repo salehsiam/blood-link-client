@@ -51,7 +51,7 @@ const ContentManagement = () => {
     });
   };
   return (
-    <div className="md:mx-8 mt-16">
+    <div className="md:mx-8 mt-16 mb-8">
       <SectionTitle
         heading="Easily Manage Blog Posts"
         subHeading="Manage Blog Content"

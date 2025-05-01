@@ -6,19 +6,21 @@ import useAreaLocation from "../../Hooks/useAreaLocation";
 import axios from "axios";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import Loading from "../Shared-Components/Loading";
+import SectionTitle from "../Shared-Components/SectionTitle"; // ⬅️ Make sure this exists
+import { Link } from "react-router-dom";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Profile = () => {
-  const [userData, refetch, isLoading] = useUsers(); // Fetch user data and refetch function
-  const [isEditing, setIsEditing] = useState(false); // Toggle for edit mode
+  const [userData, refetch, isLoading] = useUsers();
+  const [isEditing, setIsEditing] = useState(false);
   const axiosPublic = useAxiosPublic();
 
   const [districts, upazilaData] = useAreaLocation();
   const [filteredUpazilas, setFilteredUpazilas] = useState([]);
   const [imagePreview, setImagePreview] = useState("");
-  const [imageFile, setImageFile] = useState(null); // Store image file for uploading
+  const [imageFile, setImageFile] = useState(null);
 
   const [formState, setFormState] = useState({
     name: "",
@@ -27,7 +29,6 @@ const Profile = () => {
     upazila: "",
   });
 
-  // Initialize form states when userData is available
   useEffect(() => {
     if (userData && districts.length > 0 && upazilaData.length > 0) {
       setFormState({
@@ -38,7 +39,6 @@ const Profile = () => {
       });
       setImagePreview(userData.image || "");
 
-      // Filter upazilas based on the user's district
       const district = districts.find((d) => d.name === userData.districts);
       if (district) {
         const upazilas = upazilaData.filter(
@@ -67,8 +67,7 @@ const Profile = () => {
   };
 
   const handleUpazilaChange = (e) => {
-    const upazilaName = e.target.value;
-    setFormState({ ...formState, upazila: upazilaName });
+    setFormState({ ...formState, upazila: e.target.value });
   };
 
   const handleImageChange = (e) => {
@@ -84,29 +83,20 @@ const Profile = () => {
 
     let uploadedImageUrl = userData.image;
     if (imageFile) {
-      // Upload the image to IMGBB
       const formData = new FormData();
       formData.append("image", imageFile);
 
       try {
         const response = await axios.post(image_hosting_api, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+          headers: { "Content-Type": "multipart/form-data" },
         });
         uploadedImageUrl = response.data.data.display_url;
       } catch (error) {
-        console.error("Image upload failed:", error);
-        Swal.fire({
-          title: "Error!",
-          text: "Failed to upload image. Please try again.",
-          icon: "error",
-        });
+        Swal.fire("Error!", "Image upload failed.", "error");
         return;
       }
     }
 
-    // Prepare form data
     const formData = {
       name: formState.name,
       image: uploadedImageUrl,
@@ -121,49 +111,41 @@ const Profile = () => {
         formData
       );
       if (response.data.modifiedCount > 0) {
-        Swal.fire({
-          title: "Success!",
-          text: "Profile updated successfully.",
-          icon: "success",
-        });
-        setIsEditing(false); // Exit edit mode
-        refetch(); // Refresh user data
+        Swal.fire("Success!", "Profile updated successfully.", "success");
+        setIsEditing(false);
+        refetch();
       }
     } catch (error) {
-      console.error("Failed to update profile:", error);
-      Swal.fire({
-        title: "Error!",
-        text: "Failed to update profile. Please try again.",
-        icon: "error",
-      });
+      Swal.fire("Error!", "Failed to update profile.", "error");
     }
   };
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
+
+  if (isLoading) return <Loading />;
 
   return (
-    <div className="container mx-auto mt-16 p-8 ">
-      <h1 className="text-2xl text-center font-bold mb-4">My Profile</h1>
+    <div className="container mx-auto mt-20 p-6">
+      <SectionTitle
+        heading="My Profile"
+        subheading="Manage your personal information and blood donation preferences"
+      />
+
       <div className="bg-white shadow-md rounded-lg p-6 border border-red-200">
         {!isEditing ? (
-          // Display mode
           <div>
             <div className="flex justify-between items-center mb-4">
-              <div>
-                <img
-                  src={imagePreview}
-                  alt="Avatar"
-                  className="w-36 h-36 object-cover rounded-full"
-                />
-              </div>
+              <img
+                src={imagePreview}
+                alt="Avatar"
+                className="w-36 h-36 object-cover rounded-full border"
+              />
               <button
-                className="btn text-2xl btn-xs btn-ghost"
+                className="btn btn-sm btn-outline"
                 onClick={() => setIsEditing(true)}
               >
-                <FaEdit />
+                <FaEdit className="mr-2" /> Edit Profile
               </button>
             </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="font-bold">Name:</p>
@@ -188,19 +170,12 @@ const Profile = () => {
             </div>
           </div>
         ) : (
-          // Edit mode
-          <form onSubmit={handleFormSubmit}>
-            <div className="flex justify-end mb-4">
-              <button type="submit" className="btn text-white btn-success">
-                Save
-              </button>
-            </div>
+          <form onSubmit={handleFormSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="form-control">
                 <label className="label">Name</label>
                 <input
                   type="text"
-                  name="name"
                   value={formState.name}
                   onChange={(e) =>
                     setFormState({ ...formState, name: e.target.value })
@@ -208,37 +183,37 @@ const Profile = () => {
                   className="input input-bordered"
                 />
               </div>
+
               <div className="form-control">
                 <label className="label">Email</label>
                 <input
                   type="email"
-                  name="email"
-                  value={userData.email || ""}
+                  value={userData.email}
                   disabled
                   className="input input-bordered"
                 />
               </div>
+
               <div className="form-control">
                 <label className="label">Profile Image</label>
                 <div className="flex items-center gap-4">
                   <img
                     src={imagePreview}
-                    alt="Profile"
-                    className="w-16 h-16 object-cover rounded-full border"
+                    alt="Preview"
+                    className="w-16 h-16 object-cover rounded-full"
                   />
                   <input
                     type="file"
-                    name="image"
                     accept="image/*"
-                    className="file-input file-input-bordered w-full max-w-xs"
                     onChange={handleImageChange}
+                    className="file-input file-input-bordered w-full max-w-xs"
                   />
                 </div>
               </div>
+
               <div className="form-control">
                 <label className="label">Blood Group</label>
                 <select
-                  name="bloodGroup"
                   value={formState.bloodGroup}
                   onChange={(e) =>
                     setFormState({ ...formState, bloodGroup: e.target.value })
@@ -246,49 +221,63 @@ const Profile = () => {
                   className="select select-bordered"
                 >
                   <option value="">-- Select Blood Group --</option>
-                  <option value="A+">A+</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B-">B-</option>
-                  <option value="O+">O+</option>
-                  <option value="O-">O-</option>
-                  <option value="AB+">AB+</option>
-                  <option value="AB-">AB-</option>
+                  {["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map(
+                    (group) => (
+                      <option key={group} value={group}>
+                        {group}
+                      </option>
+                    )
+                  )}
                 </select>
               </div>
+
               <div className="form-control">
-                <label>District</label>
+                <label className="label">District</label>
                 <select
-                  name="districts"
                   value={formState.districts}
                   onChange={handleDistrictChange}
                   className="select select-bordered"
                 >
-                  <option value="">-- Select a District --</option>
-                  {districts.map((district) => (
-                    <option key={district.id} value={district.name}>
-                      {district.name}
+                  <option value="">-- Select District --</option>
+                  {districts.map((d) => (
+                    <option key={d.id} value={d.name}>
+                      {d.name}
                     </option>
                   ))}
                 </select>
               </div>
+
               <div className="form-control">
-                <label>Upazila</label>
+                <label className="label">Upazila</label>
                 <select
-                  name="upazila"
                   value={formState.upazila}
                   onChange={handleUpazilaChange}
                   className="select select-bordered"
                   disabled={!formState.districts}
                 >
                   <option value="">-- Select Upazila --</option>
-                  {filteredUpazilas.map((upazila) => (
-                    <option key={upazila.id} value={upazila.name}>
-                      {upazila.name}
+                  {filteredUpazilas.map((u) => (
+                    <option key={u.id} value={u.name}>
+                      {u.name}
                     </option>
                   ))}
                 </select>
               </div>
+            </div>
+
+            <div className="flex gap-2 justify-end">
+              <button
+                type="submit"
+                className="btn bg-primary hover:bg-primary text-white"
+              >
+                Save Changes
+              </button>
+              <button
+                onClick={() => setIsEditing(false)}
+                className="btn bg-accent hover:bg-accent text-white"
+              >
+                Back
+              </button>
             </div>
           </form>
         )}

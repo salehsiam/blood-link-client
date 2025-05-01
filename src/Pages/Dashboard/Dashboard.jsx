@@ -49,13 +49,13 @@ const Dashboard = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <div className=" pt-16 bg-red-300 min-h-screen">
+        <div className=" pt-16 bg-primary min-h-screen text-secondary">
           <div>
             <h2
               onClick={() => {
                 navigate("/dashboard");
               }}
-              className="text-2xl font-semibold cursor-pointer text-center"
+              className="text-2xl font-semibold cursor-pointer text-secondary text-center"
             >
               BloodLink
             </h2>

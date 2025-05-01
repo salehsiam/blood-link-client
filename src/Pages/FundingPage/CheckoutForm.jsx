@@ -81,7 +81,7 @@ const CheckoutForm = ({ amount }) => {
       };
       await axiosSecure.post("/funding", funding).then((res) => {
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: "Donate successful",
           showConfirmButton: false,

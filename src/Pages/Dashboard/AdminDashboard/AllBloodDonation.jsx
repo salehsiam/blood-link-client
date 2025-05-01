@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "../../Shared-Components/Loading";
 import useAdmin from "../../../Hooks/useAdmin";
+import SectionTitle from "../../Shared-Components/SectionTitle";
 
 const AllBloodDonation = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,7 +58,10 @@ const AllBloodDonation = () => {
 
   return (
     <div className="mt-16 px-8">
-      <h2 className="text-2xl mb-6">All Donation Requests:</h2>
+      <SectionTitle
+        subHeading="Browse current blood donation"
+        heading="All Donation Requests"
+      />
       <div className="overflow-x-auto min-h-screen">
         <table className="table table-zebra border border-red-500">
           <thead>

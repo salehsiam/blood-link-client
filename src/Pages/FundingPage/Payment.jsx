@@ -2,27 +2,48 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { useState } from "react";
+import SectionTitle from "../Shared-Components/SectionTitle";
+
+// Load Stripe public key
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+
 const Payment = () => {
   const [amount, setAmount] = useState("");
 
   return (
-    <div className="py-28">
-      <div className="w-2/3 mx-auto p-6 bg-white shadow-md rounded-lg border border-red-500">
-        <h2 className="text-2xl font-bold mb-4">Give Fund</h2>
-        <div className="space-y-4">
+    <div className="py-24 bg-gray-50 min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-lg bg-white border border-red-500 rounded-2xl p-8">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl font-extrabold text-red-600">
+            Support Our Cause
+          </h2>
+          <p className="text-gray-600 mt-1 text-sm">
+            Donate to help save lives through blood donation.
+          </p>
+        </div>
+
+        <div className="mb-6">
+          <label
+            htmlFor="amount"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Enter Amount (USD)
+          </label>
           <input
+            id="amount"
             type="number"
-            placeholder="Amount (USD)"
-            className="input input-bordered w-full"
+            placeholder="e.g. 50"
+            className="input input-bordered w-full text-lg"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            min="1"
             required
           />
-          <Elements stripe={stripePromise}>
-            <CheckoutForm amount={amount} />
-          </Elements>
         </div>
+
+        <Elements stripe={stripePromise}>
+          <CheckoutForm amount={amount} />
+        </Elements>
       </div>
     </div>
   );

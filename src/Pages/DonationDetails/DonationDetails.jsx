@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
+import SectionTitle from "../Shared-Components/SectionTitle";
 
 const DonationDetails = () => {
   const { id } = useParams(); // Get donation request ID from URL
@@ -43,7 +43,6 @@ const DonationDetails = () => {
             donor_name,
             donor_email,
           });
-          console.log(requestDetails);
           setIsModalOpen(false);
         }
       })
@@ -52,53 +51,62 @@ const DonationDetails = () => {
 
   return (
     <div className="container mx-auto px-6 py-24">
-      <h1 className="text-2xl font-bold mb-4">Donation Request Details</h1>
-      <div className="bg-white shadow p-6 rounded">
-        {/* Display Request Details */}
-        <p>
-          <strong>Recipient Name:</strong> {requestDetails.recipient_name}
-        </p>
-        <p>
-          <strong>Blood Group:</strong> {requestDetails.bloodGroup}
-        </p>
-        <p>
-          <strong>District:</strong> {requestDetails.recipient_zila}
-        </p>
-        <p>
-          <strong>Upazila:</strong> {requestDetails.recipient_upazila}
-        </p>
-        <p>
-          <strong>Hospital:</strong> {requestDetails.hospital_name}
-        </p>
-        <p>
-          <strong>Address:</strong> {requestDetails.address}
-        </p>
-        <p>
-          <strong>Date:</strong> {new Date(requestDetails.date).toDateString()}
-        </p>
-        <p>
-          <strong>Time:</strong> {requestDetails.time}
-        </p>
-        <p>
-          <strong>Status:</strong> {requestDetails.status}
-        </p>
+      <SectionTitle
+        heading="View details & confirm donation"
+        subHeading="Donation Request"
+      />
+      <div className="h-screen w-full   flex flex-col items-center justify-center p-8">
+        <div className=" shadow-lg p-8 rounded-lg max-w-4xl w-full">
+          <div className="space-y-4">
+            <h2 className="text-2xl">
+              Recipient Name: <strong> {requestDetails.recipient_name}</strong>
+            </h2>
+            <p>
+              <strong>Blood Group:</strong> {requestDetails.bloodGroup}
+            </p>
+            <p>
+              <strong>District:</strong> {requestDetails.recipient_zila}
+            </p>
+            <p>
+              <strong>Upazila:</strong> {requestDetails.recipient_upazila}
+            </p>
+            <p>
+              <strong>Hospital:</strong> {requestDetails.hospital_name}
+            </p>
+            <p>
+              <strong>Address:</strong> {requestDetails.address}
+            </p>
+            <p>
+              <strong>Date:</strong>{" "}
+              {new Date(requestDetails.date).toDateString()}
+            </p>
+            <p>
+              <strong>Time:</strong> {requestDetails.time}
+            </p>
+            <p>
+              <strong>Status:</strong> {requestDetails.status}
+            </p>
 
-        {/* Donate Button */}
-        {requestDetails.status === "pending" && (
-          <button
-            className="btn btn-primary mt-4"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Donate
-          </button>
-        )}
+            {/* Donate Button */}
+            {requestDetails.status === "pending" && (
+              <button
+                className="btn bg-red-600 text-white hover:bg-red-700 transition duration-300 mt-6 w-full"
+                onClick={() => setIsModalOpen(true)}
+              >
+                Donate
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg w-96">
-            <h2 className="font-bold text-lg">Confirm Donation</h2>
+            <h2 className="font-bold text-lg text-center text-red-600">
+              Confirm Donation
+            </h2>
             <form>
               <div className="form-control mb-4">
                 <label className="label">
@@ -125,13 +133,13 @@ const DonationDetails = () => {
             </form>
             <div className="flex justify-end space-x-2">
               <button
-                className="btn btn-secondary"
+                className="btn bg-gray-300 text-gray-700 hover:bg-gray-400"
                 onClick={() => setIsModalOpen(false)}
               >
                 Cancel
               </button>
               <button
-                className="btn btn-primary"
+                className="btn bg-red-600 text-white hover:bg-red-700 transition duration-300"
                 onClick={handleConfirmDonation}
               >
                 Confirm Donation
