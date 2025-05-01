@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAreaLocation from "../../Hooks/useAreaLocation";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
+import { FaLocationPin } from "react-icons/fa6";
+import { FaCalendarAlt, FaSearch } from "react-icons/fa";
 
 const SearchPage = () => {
   const [districts, upazilaData] = useAreaLocation();
@@ -33,6 +36,15 @@ const SearchPage = () => {
       setFilteredUpazilas([]);
     }
   };
+  useEffect(() => {
+    axiosPublic
+      .get("/search-donation-request", {
+        params: { status: "pending" },
+      })
+      .then((res) => {
+        setSearchResults(res.data);
+      });
+  }, []);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -59,14 +71,25 @@ const SearchPage = () => {
       <h1 className="text-2xl font-bold mb-4">Search Donors</h1>
       <form
         onSubmit={handleSearch}
-        className="bg-white shadow-md p-6 rounded-lg"
+        className="bg-white/80  shadow-xl p-8 rounded-2xl backdrop-blur-lg relative"
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Gradient Border Effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 opacity-20 rounded-2xl pointer-events-none"></div>
+
+        {/* Heading */}
+        <h2 className="text-2xl font-bold text-red-600 text-center mb-6">
+          Search for Donors
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Blood Group */}
           <div className="form-control">
-            <label className="label">Blood Group</label>
+            <label className="label font-semibold text-gray-700">
+              Blood Group
+            </label>
             <select
               name="bloodGroup"
-              className="select select-bordered"
+              className="select select-bordered bg-white text-gray-800 shadow-md focus:ring-2 focus:ring-red-500"
               onChange={(e) =>
                 setSearchCriteria({
                   ...searchCriteria,
@@ -85,11 +108,15 @@ const SearchPage = () => {
               <option value="AB-">AB-</option>
             </select>
           </div>
+
+          {/* District */}
           <div className="form-control">
-            <label className="label">District</label>
+            <label className="label font-semibold text-gray-700">
+              District
+            </label>
             <select
               name="district"
-              className="select select-bordered"
+              className="select select-bordered bg-white text-gray-800 shadow-md focus:ring-2 focus:ring-red-500"
               onChange={handleDistrictChange}
             >
               <option value="">-- Select District --</option>
@@ -100,11 +127,13 @@ const SearchPage = () => {
               ))}
             </select>
           </div>
+
+          {/* Upazila */}
           <div className="form-control">
-            <label className="label">Upazila</label>
+            <label className="label font-semibold text-gray-700">Upazila</label>
             <select
               name="upazila"
-              className="select select-bordered"
+              className="select select-bordered bg-white text-gray-800 shadow-md focus:ring-2 focus:ring-red-500"
               onChange={(e) =>
                 setSearchCriteria({
                   ...searchCriteria,
@@ -122,9 +151,17 @@ const SearchPage = () => {
             </select>
           </div>
         </div>
-        <div className="mt-4">
-          <button type="submit" className="btn btn-primary">
-            Search
+
+        {/* Submit Button */}
+        <div className="mt-6 text-center">
+          <button
+            type="submit"
+            className="px-6 py-3 bg-red-500 text-white text-lg font-semibold rounded-full shadow-md hover:bg-red-600 transition duration-300 transform hover:scale-105"
+          >
+            <p className="flex items-center gap-2">
+              {" "}
+              <FaSearch /> Search
+            </p>
           </button>
         </div>
       </form>
@@ -137,30 +174,48 @@ const SearchPage = () => {
             {searchResults.map((result) => (
               <div
                 key={result._id}
-                className="card bg-white shadow-md p-4 rounded-lg"
+                className="relative bg-white/80 border border-gray-200 shadow-lg rounded-xl overflow-hidden p-5 backdrop-blur-lg hover:shadow-2xl"
               >
-                <h2 className="font-bold text-lg">{result.recipient_name}</h2>
-                <p>
-                  <strong>Location:</strong> {result.recipient_zila},{" "}
+                {/* Gradient Border Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 opacity-25 rounded-xl pointer-events-none"></div>
+
+                {/* Card Content */}
+                <h2 className="font-bold text-xl text-red-600 mb-2">
+                  {result.recipient_name}
+                </h2>
+
+                <p className="text-gray-700 flex gap-1 items-center">
+                  <FaLocationPin />
+                  <strong> Location:</strong> {result.recipient_zila},{" "}
                   {result.recipient_upazila}
                 </p>
-                <p>
-                  <strong>Blood Group:</strong> {result.bloodGroup}
+
+                <p className="text-gray-700">
+                  <strong>🩸 Blood Group:</strong>
+                  <span className="bg-red-500 text-white px-2 py-1 rounded-md ml-1">
+                    {result.bloodGroup}
+                  </span>
                 </p>
-                <p>
-                  <strong>Date:</strong> {result.date}
+
+                <p className="text-gray-700 flex items-center gap-2">
+                  <FaCalendarAlt />
+                  <strong>Date:</strong>{" "}
+                  {format(new Date(result.date), "MMMM dd, yyyy")}
                 </p>
-                <p>
-                  <strong>Time:</strong> {result.time}
+
+                <p className="text-gray-700">
+                  <strong>⏰ Time:</strong> {result.time}
                 </p>
+
+                {/* Call to Action Button */}
                 <Link to={`/donation-request-details/${result._id}`}>
                   <button
-                    className="btn btn-secondary mt-2"
+                    className="w-full mt-4 py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition duration-300"
                     onClick={() =>
                       console.log(`Viewing details for ${result._id}`)
                     }
                   >
-                    View
+                    View Details
                   </button>
                 </Link>
               </div>

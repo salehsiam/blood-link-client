@@ -111,7 +111,7 @@ const UpdatedDonation = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <h2 className="text-4xl text-center ">Update Donation Request</h2>
       <div className="card w-full max-w-lg mx-auto">
         <form onSubmit={handleDonationRequest} className="card-body">

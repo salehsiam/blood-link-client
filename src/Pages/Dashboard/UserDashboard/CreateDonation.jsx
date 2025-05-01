@@ -83,7 +83,7 @@ const CreateDonation = () => {
     });
   };
   return (
-    <div className="mt-10">
+    <div className="mt-10 px-6">
       <div className="card w-full max-w-lg mx-auto border border-red-300 mt-6">
         <h2 className="text-4xl text-center mt-5 underline text-red-500 font-semibold ">
           Create Donation Request

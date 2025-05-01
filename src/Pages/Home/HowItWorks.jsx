@@ -1,50 +1,73 @@
 import { BiSolidDonateBlood, BiSolidHappyHeartEyes } from "react-icons/bi";
-import { FaDonate } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa6";
 import { IoPersonAdd } from "react-icons/io5";
+import SectionTitle from "../Shared-Components/SectionTitle";
 
 const HowItWorks = () => {
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center">
-        <h2 className="text-3xl font-semibold">How It Works</h2>
-        <p className="md:w-1/2 text-center">
-          Every drop counts, and your generosity can bring hope to those in
-          need. Join us in making a positive impact today!
-        </p>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3">
-        {/* Register */}
-        <div className="flex flex-col justify-center items-center">
-          <div className="bg-gray-300 p-2 rounded-full">
-            <IoPersonAdd className="text-3xl text-red-500" />
-          </div>
-          <h3 className="text-2xl font-semibold">Register as a Donor</h3>
-          <p>Sign up by filling out a simple form.</p>
-          <FaArrowRight />
-        </div>
-        {/* Donate */}
-        <div className="flex flex-col justify-center items-center">
-          <div className="bg-gray-300 p-2 rounded-full">
-            <BiSolidDonateBlood className="text-3xl text-red-500" />
-          </div>
+    <section className="py-12">
+      {/* Section Heading */}
+      <SectionTitle
+        heading="How It Works"
+        subHeading="-- Simple Steps to Save Lives --"
+      />
 
-          <h3 className="text-2xl font-semibold">Donate Blood</h3>
-          <p>The donation process takes only 10-15 minutes.</p>
-          <FaArrowRight />
-        </div>
-        <div className="flex flex-col justify-center items-center text-center">
-          <div className="bg-gray-300 p-2 rounded-full">
-            <BiSolidHappyHeartEyes className="text-3xl text-red-500" />
+      {/* Steps Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Step 1 - Register */}
+        <div className="flex flex-col items-center bg-white p-8 rounded-xl shadow-lg border border-gray-200 transition duration-300 hover:shadow-2xl">
+          <div className="relative flex flex-col">
+            <div className="bg-red-500 text-white w-10 h-10 flex items-center justify-center rounded-full font-bold absolute -top-5 -left-5 shadow-md">
+              1
+            </div>
+            <div className="bg-red-100 p-4 rounded-full shadow-md">
+              <IoPersonAdd className="text-4xl text-red-500" />
+            </div>
           </div>
-          <h3 className="text-2xl font-semibold">Save Lives</h3>
-          <p>
+          <h3 className="text-2xl font-semibold mt-6 text-gray-800">
+            Register as a Donor
+          </h3>
+          <p className="text-gray-600 mt-2 text-center grow">
+            Sign up by filling out a simple form.
+          </p>
+        </div>
+
+        {/* Step 2 - Donate */}
+        <div className="flex flex-col items-center bg-white p-8 rounded-xl shadow-lg border border-gray-200 transition duration-300 hover:shadow-2xl">
+          <div className="relative">
+            <div className="bg-red-500 text-white w-10 h-10 flex items-center justify-center rounded-full font-bold absolute -top-5 -left-5 shadow-md">
+              2
+            </div>
+            <div className="bg-red-100 p-4 rounded-full shadow-md">
+              <BiSolidDonateBlood className="text-4xl text-red-500" />
+            </div>
+          </div>
+          <h3 className="text-2xl font-semibold mt-6 text-gray-800">
+            Donate Blood
+          </h3>
+          <p className="text-gray-600 mt-2 text-center">
+            The donation process takes only 10-15 minutes.
+          </p>
+        </div>
+
+        {/* Step 3 - Save Lives */}
+        <div className="flex flex-col items-center bg-white p-8 rounded-xl shadow-lg border border-gray-200 transition duration-300 hover:shadow-2xl">
+          <div className="relative">
+            <div className="bg-red-500 text-white w-10 h-10 flex items-center justify-center rounded-full font-bold absolute -top-5 -left-5 shadow-md">
+              3
+            </div>
+            <div className="bg-red-100 p-4 rounded-full shadow-md">
+              <BiSolidHappyHeartEyes className="text-4xl text-red-500" />
+            </div>
+          </div>
+          <h3 className="text-2xl font-semibold mt-6 text-gray-800">
+            Save Lives
+          </h3>
+          <p className="text-gray-600 mt-2 text-center">
             Your donation can save up to three lives and help countless others.
           </p>
-          <FaArrowRight />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

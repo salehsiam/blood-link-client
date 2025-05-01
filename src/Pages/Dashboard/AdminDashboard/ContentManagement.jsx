@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useAdmin from "../../../Hooks/useAdmin";
+import SectionTitle from "../../Shared-Components/SectionTitle";
+import { FaPen } from "react-icons/fa6";
 
 const ContentManagement = () => {
   const axiosSecure = useAxiosSecure();
@@ -50,63 +52,87 @@ const ContentManagement = () => {
   };
   return (
     <div className="md:mx-8 mt-16">
-      <div className="flex px-6 justify-between ">
-        <h2 className="text-4xl font-bold">Manage Blog</h2>
-        <Link to="/dashboard/content-management/add-blog">
-          <button className="btn btn-primary">Add Blog</button>
-        </Link>
+      <SectionTitle
+        heading="Easily Manage Blog Posts"
+        subHeading="Manage Blog Content"
+      />
+
+      <div className="bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-500 p-6 rounded-xl shadow-md mb-10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div>
+            <h3 className="text-2xl font-bold text-red-600">
+              {" "}
+              Create and Share Blogs with Impact
+            </h3>
+            <p className="text-gray-700 mt-2 max-w-md">
+              Inspire, educate, and engage your audience by publishing your
+              ideas! Click below to add a new blog post and make a difference.
+            </p>
+          </div>
+          <Link to="/dashboard/content-management/add-blog">
+            <button className="btn bg-primary text-white hover:bg-primary hover:scale-105 transition duration-300 shadow-lg">
+              Add Your Blog
+            </button>
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {blogs.map((blog) => (
           <div
             key={blog._id}
-            className="flex flex-col gap-1 max-w-sm mx-auto  shadow-md p-4"
+            className="flex flex-col bg-white border rounded-xl shadow-md overflow-hidden transition hover:shadow-lg"
           >
-            <div className="h-40">
+            {/* Thumbnail */}
+            <div className="h-44 overflow-hidden">
               <img
                 src={blog.thumbnail}
                 alt={blog.title}
-                className="w-full h-full object-cover rounded-md"
+                className="w-full h-full object-cover transform hover:scale-105 transition duration-300"
               />
             </div>
-            <div className="grow">
-              <h2 className="text-md font-bold mt-2">{blog.title}</h2>
-              <p
-                className="text-sm"
-                dangerouslySetInnerHTML={{
-                  __html: blog.content.substring(0, 150) + "...",
-                }}
-              ></p>
-            </div>
-            {isAdmin && (
-              <div className=" flex gap-2">
-                {blog.status === "draft" ? (
-                  <button
-                    disabled={!isAdmin}
-                    onClick={() => handleStatusChange(blog._id, "published")}
-                    className="btn btn-success"
-                  >
-                    Publish
-                  </button>
-                ) : (
-                  <button
-                    disabled={!isAdmin}
-                    onClick={() => handleStatusChange(blog._id, "draft")}
-                    className="btn btn-warning"
-                  >
-                    Unpublish
-                  </button>
-                )}
-                <button
-                  disabled={!isAdmin}
-                  onClick={() => handleDelete(blog._id)}
-                  className="btn btn-error"
-                >
-                  Delete
-                </button>
+
+            {/* Blog Content */}
+            <div className="p-4 flex-grow flex flex-col justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-red-600 line-clamp-2">
+                  {blog.title}
+                </h3>
+                <p
+                  className="text-sm text-gray-700 mt-2 line-clamp-3"
+                  dangerouslySetInnerHTML={{
+                    __html: blog.content.substring(0, 120) + "...",
+                  }}
+                ></p>
               </div>
-            )}
+
+              {/* Status & Actions */}
+              {isAdmin && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {blog.status === "draft" ? (
+                    <button
+                      onClick={() => handleStatusChange(blog._id, "published")}
+                      className="btn btn-success text-white"
+                    >
+                      Publish
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleStatusChange(blog._id, "draft")}
+                      className="btn btn-warning text-white"
+                    >
+                      Unpublish
+                    </button>
+                  )}
+                  <button
+                    onClick={() => handleDelete(blog._id)}
+                    className="btn btn-error text-white"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>

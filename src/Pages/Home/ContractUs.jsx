@@ -83,10 +83,10 @@ const ContactUs = () => {
           <div className="text-lg flex items-center font-bold">
             <BiPhoneCall /> <span>+880 1234 567 890</span>
           </div>
-          <div className="text-sm flex items-center text-gray-700 mt-2">
+          <div className="text-sm flex items-center gap-2 text-gray-700 mt-2">
             <FaAddressBook></FaAddressBook> <span>support@yourwebsite.com</span>
           </div>
-          <div className="text-sm flex items-center text-gray-700 mt-2">
+          <div className="text-sm flex items-center gap-2 text-gray-700 mt-2">
             <FaLocationPin></FaLocationPin>
             <span>123, Main Street, Dhaka, Bangladesh</span>
           </div>
