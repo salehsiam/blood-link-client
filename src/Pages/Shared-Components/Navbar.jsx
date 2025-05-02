@@ -1,7 +1,8 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import useUsers from "../../Hooks/useUsers";
-import { FaUserCircle } from "react-icons/fa";
+import { FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -11,6 +12,16 @@ const Navbar = () => {
     logout().then((res) => {
       navigate("/login");
     });
+  };
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
   return (
     <div className="w-full">
@@ -78,6 +89,17 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
+          <button
+            onClick={toggleTheme}
+            className="p-3 mr-3 bg-primary rounded-full  transition-all"
+            aria-label="Toggle Theme"
+          >
+            {theme === "dark" ? (
+              <FaSun className="text-yellow-500" />
+            ) : (
+              <FaMoon className="text-gray-800" />
+            )}
+          </button>
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}

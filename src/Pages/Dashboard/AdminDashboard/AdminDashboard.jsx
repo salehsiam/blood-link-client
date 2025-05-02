@@ -23,7 +23,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 min-h-screen">
       {/* Welcome Section */}
       <div
         className="h-[200px] md:h-[280px] rounded-2xl overflow-hidden shadow-xl relative"

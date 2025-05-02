@@ -147,7 +147,7 @@ const DonationDetails = () => {
             </form>
             <div className="flex justify-end space-x-2">
               <button
-                className="btn bg-gray-300 text-gray-700 hover:bg-gray-400"
+                className="btn bg-gray-300 text-neutral hover:bg-gray-400"
                 onClick={() => setIsModalOpen(false)}
               >
                 Cancel

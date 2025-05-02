@@ -29,13 +29,13 @@ const FundingPage = () => {
       </div>
 
       {/* Call to Action Box */}
-      <div className="bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-500 p-6 rounded-xl shadow-md mb-10">
+      <div className="bg-gradient-to-r from-accent/10 to-accent/15 border-l-4 border-red-500 p-6 rounded-xl shadow-md mb-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
             <h3 className="text-2xl font-bold text-red-600">
               Make a Difference Today!
             </h3>
-            <p className="text-gray-700 mt-2 max-w-md">
+            <p className="text-neutral mt-2 max-w-md">
               Your generous contribution helps save lives and support emergency
               blood needs across the country. Join our mission to create a
               healthier tomorrow.

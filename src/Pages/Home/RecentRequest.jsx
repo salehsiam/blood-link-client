@@ -27,15 +27,15 @@ const RecentRequest = () => {
         {bloodReq.map((result) => (
           <div
             key={result._id}
-            className=" flex flex-col border border-primary/30 rounded-xl overflow-hidden p-5 "
+            className=" flex flex-col bg-accent/10 border border-primary/30 rounded-xl overflow-hidden p-5 "
           >
             {/* Recipient Name */}
-            <h2 className="font-bold text-xl text-primary mb-3">
+            <h2 className="font-bold text-xl text-neutral mb-3">
               {result.recipient_name}
             </h2>
 
             {/* Request Info */}
-            <div className="flex flex-col grow text-gray-700 space-y-2">
+            <div className="flex flex-col grow text-neutral space-y-2">
               <p className="flex items-center  gap-2">
                 <FaLocationPin className="text-primary " />
                 <span>

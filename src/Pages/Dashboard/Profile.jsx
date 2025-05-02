@@ -129,7 +129,7 @@ const Profile = () => {
         subheading="Manage your personal information and blood donation preferences"
       />
 
-      <div className="bg-white shadow-md rounded-lg p-6 border border-red-200">
+      <div className="bg-accent/10 shadow-md rounded-lg p-6 border border-red-200">
         {!isEditing ? (
           <div>
             <div className="flex justify-between items-center mb-4">

@@ -2,18 +2,28 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import useVolunteer from "../../Hooks/useVolunteer";
 import useAuth from "../../Hooks/useAuth";
-import { FaBlog, FaHome } from "react-icons/fa";
+import { FaBlog, FaHome, FaMoon, FaSun } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import { MdBloodtype, MdCreate, MdRequestPage } from "react-icons/md";
 import { RiFundsFill } from "react-icons/ri";
 import Footer from "../Shared-Components/Footer";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isAdmin] = useAdmin();
   const [isVolunteer] = useVolunteer();
   const { user } = useAuth();
-  console.log(isVolunteer);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+  };
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -41,7 +51,6 @@ const Dashboard = () => {
         </div>
         {/* Page content here */}
         <Outlet></Outlet>
-        <Footer></Footer>
       </div>
       <div className="drawer-side">
         <label
@@ -51,14 +60,27 @@ const Dashboard = () => {
         ></label>
         <div className=" pt-16 bg-primary min-h-screen text-secondary">
           <div>
-            <h2
-              onClick={() => {
-                navigate("/dashboard");
-              }}
-              className="text-2xl font-semibold cursor-pointer text-secondary text-center"
-            >
-              BloodLink
-            </h2>
+            <div className="flex justify-between items-center px-6">
+              <h2
+                onClick={() => {
+                  navigate("/dashboard");
+                }}
+                className="text-2xl font-semibold cursor-pointer text-secondary"
+              >
+                BloodLink
+              </h2>
+              <button
+                onClick={toggleTheme}
+                className="p-3 bg-base-200 rounded-full transition-all"
+                aria-label="Toggle Theme"
+              >
+                {theme === "dark" ? (
+                  <FaSun className="text-yellow-500" />
+                ) : (
+                  <FaMoon className="text-gray-800" />
+                )}
+              </button>
+            </div>
             {isAdmin && (
               <ul className="menu p-4">
                 <li>

@@ -25,7 +25,7 @@ const Payment = () => {
         <div className="mb-6">
           <label
             htmlFor="amount"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-neutral mb-2"
           >
             Enter Amount (USD)
           </label>

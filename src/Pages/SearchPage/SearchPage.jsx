@@ -84,7 +84,7 @@ const SearchPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Blood Group */}
           <div className="form-control">
-            <label className="label font-semibold text-gray-700">
+            <label className="label font-semibold text-neutral">
               Blood Group
             </label>
             <select
@@ -111,9 +111,7 @@ const SearchPage = () => {
 
           {/* District */}
           <div className="form-control">
-            <label className="label font-semibold text-gray-700">
-              District
-            </label>
+            <label className="label font-semibold text-neutral">District</label>
             <select
               name="district"
               className="select select-bordered bg-white text-gray-800 shadow-md focus:ring-2 focus:ring-red-500"
@@ -130,7 +128,7 @@ const SearchPage = () => {
 
           {/* Upazila */}
           <div className="form-control">
-            <label className="label font-semibold text-gray-700">Upazila</label>
+            <label className="label font-semibold text-neutral">Upazila</label>
             <select
               name="upazila"
               className="select select-bordered bg-white text-gray-800 shadow-md focus:ring-2 focus:ring-red-500"
@@ -181,7 +179,7 @@ const SearchPage = () => {
                 </h2>
 
                 {/* Request Info */}
-                <div className="flex flex-col grow text-gray-700 space-y-2">
+                <div className="flex flex-col grow text-neutral space-y-2">
                   <p className="flex items-center  gap-2">
                     <FaLocationPin className="text-primary " />
                     <span>

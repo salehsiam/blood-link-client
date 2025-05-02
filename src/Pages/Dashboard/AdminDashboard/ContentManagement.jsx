@@ -57,14 +57,14 @@ const ContentManagement = () => {
         subHeading="Manage Blog Content"
       />
 
-      <div className="bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-500 p-6 rounded-xl shadow-md mb-10">
+      <div className="bg-gradient-to-r from-accent/10 to-accent/15 border-l-4 border-red-500 p-6 rounded-xl shadow-md mb-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div>
             <h3 className="text-2xl font-bold text-red-600">
               {" "}
               Create and Share Blogs with Impact
             </h3>
-            <p className="text-gray-700 mt-2 max-w-md">
+            <p className="text-neutral mt-2 max-w-md">
               Inspire, educate, and engage your audience by publishing your
               ideas! Click below to add a new blog post and make a difference.
             </p>
@@ -81,7 +81,7 @@ const ContentManagement = () => {
         {blogs.map((blog) => (
           <div
             key={blog._id}
-            className="flex flex-col bg-white border rounded-xl shadow-md overflow-hidden transition hover:shadow-lg"
+            className="flex flex-col bg-accent/10 border rounded-xl shadow-md overflow-hidden transition hover:shadow-lg"
           >
             {/* Thumbnail */}
             <div className="h-44 overflow-hidden">
@@ -99,7 +99,7 @@ const ContentManagement = () => {
                   {blog.title}
                 </h3>
                 <p
-                  className="text-sm text-gray-700 mt-2 line-clamp-3"
+                  className="text-sm text-neutral mt-2 line-clamp-3"
                   dangerouslySetInnerHTML={{
                     __html: blog.content.substring(0, 120) + "...",
                   }}

@@ -15,13 +15,13 @@ const ContactUs = () => {
       ></SectionTitle>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Contact Form */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
+        <div className=" p-6 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold mb-4">Send Us a Message</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-neutral"
               >
                 Name
               </label>
@@ -37,7 +37,7 @@ const ContactUs = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-neutral"
               >
                 Email
               </label>
@@ -53,7 +53,7 @@ const ContactUs = () => {
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-neutral"
               >
                 Message
               </label>
@@ -76,19 +76,19 @@ const ContactUs = () => {
         </div>
 
         {/* Contact Information */}
-        <div className="flex flex-col justify-center bg-blue-100 p-6 rounded-lg shadow-md">
+        <div className="flex flex-col justify-center bg-accent/10 p-6 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold mb-4">Get in Touch</h3>
-          <p className="text-sm text-gray-700 mb-4">
+          <p className="text-sm text-neutral mb-4">
             Feel free to reach out to us via phone or use the contact form to
             send us a message. We’re here to help!
           </p>
           <div className="text-lg flex items-center font-bold">
             <BiPhoneCall /> <span>+880 1234 567 890</span>
           </div>
-          <div className="text-sm flex items-center gap-2 text-gray-700 mt-2">
+          <div className="text-sm flex items-center gap-2 text-neutral mt-2">
             <FaAddressBook></FaAddressBook> <span>support@yourwebsite.com</span>
           </div>
-          <div className="text-sm flex items-center gap-2 text-gray-700 mt-2">
+          <div className="text-sm flex items-center gap-2 text-neutral mt-2">
             <FaLocationPin></FaLocationPin>
             <span>123, Main Street, Dhaka, Bangladesh</span>
           </div>

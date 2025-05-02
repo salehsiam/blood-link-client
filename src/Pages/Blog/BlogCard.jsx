@@ -4,7 +4,7 @@ import { CiTimer } from "react-icons/ci";
 
 const BlogCard = ({ blog }) => {
   return (
-    <div className="flex max-w-xs mx-auto flex-col rounded-xl bg-secondary text-gray-800 shadow-lg transition hover:shadow-xl border border-primary/10">
+    <div className="flex max-w-xs mx-auto bg-accent/10 flex-col rounded-xl  text-neutral shadow-lg transition hover:shadow-xl border border-primary/10">
       {/* Thumbnail */}
       <div>
         <img
@@ -16,7 +16,7 @@ const BlogCard = ({ blog }) => {
 
       {/* Content */}
       <div className="flex flex-col px-4 pt-3 pb-2 grow">
-        <p className="text-sm text-gray-600 flex items-center gap-1 mb-1">
+        <p className="text-sm text-neutral flex items-center gap-1 mb-1">
           <CiTimer className="text-primary" />
           {blog?.createdAt
             ? formatDistance(new Date(blog.createdAt), new Date(), {
@@ -30,7 +30,7 @@ const BlogCard = ({ blog }) => {
         </h2>
 
         <p
-          className="text-sm text-gray-700 line-clamp-3"
+          className="text-sm text-neutral line-clamp-3"
           dangerouslySetInnerHTML={{
             __html: blog.content.substring(0, 80) + "...",
           }}
