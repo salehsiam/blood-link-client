@@ -57,13 +57,12 @@ const Registration = () => {
       return;
     }
 
-    // Check if passwords match
     if (password !== confirmPassword) {
       setPasswordError("Passwords do not match!");
       return;
     }
 
-    setPasswordError(""); // Clear error if passwords match and meet the requirements
+    setPasswordError("");
 
     try {
       const imageRes = await axiosPublic.post(image_hosting_api, imageFile, {
@@ -99,143 +98,161 @@ const Registration = () => {
   return (
     <div className="hero  min-h-screen py-24">
       <div className="hero-content flex-row-reverse">
-        <div className="text-center w-1/2 lg:text-left">
-          <img src={bloodImg} alt="" />
+        <div className="text-center w-2/3 lg:text-left">
+          <img
+            src="https://i.ibb.co.com/0yW8H4h5/Blood-donation-rafiki.png"
+            alt=""
+          />
         </div>
 
-        <div className="card w-full max-w-lg">
+        <div className="card w-full">
           <form onSubmit={handleRegistration} className="card-body">
-            <h3 className="text-3xl font-bold text-center">Registration</h3>
+            <h3 className="text-3xl font-bold text-center mb-4">
+              Registration
+            </h3>
 
-            {/* Name Input */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Name</span>
-              </label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                className="input input-bordered"
-                required
-              />
+            {/* Two-column layout */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Name Input */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+
+              {/* Email Input */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+
+              {/* Password Input */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Password</span>
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+
+              {/* Confirm Password Input */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Confirm Password</span>
+                </label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  className="input input-bordered"
+                  required
+                />
+                {passwordError && (
+                  <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+                )}
+              </div>
+
+              {/* Blood Group Select */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Blood Group</span>
+                </label>
+                <select name="blood_group" className="select select-bordered">
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                </select>
+              </div>
+
+              {/* District Select */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">District</span>
+                </label>
+                <select
+                  name="districts"
+                  onChange={handleDistrictChange}
+                  value={selectedDistrict}
+                  className="select select-bordered"
+                >
+                  <option value="">-- Select a District --</option>
+                  {districts.map((district) => (
+                    <option key={district.id} value={district.name}>
+                      {district.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Upazila Select */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Upazila</span>
+                </label>
+                <select
+                  name="upazila"
+                  className="select select-bordered"
+                  disabled={!selectedDistrict}
+                >
+                  <option value="">-- Select Upazila --</option>
+                  {filteredUpazilas.map((upazila) => (
+                    <option key={upazila.id} value={upazila.name}>
+                      {upazila.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Image Input */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Profile Image</span>
+                </label>
+                <input
+                  type="file"
+                  name="image"
+                  className="file-input file-input-bordered w-full"
+                  required
+                />
+              </div>
             </div>
 
-            {/* Email Input */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="input input-bordered"
-                required
-              />
-            </div>
-
-            {/* Password Input */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                className="input input-bordered"
-                required
-              />
-            </div>
-
-            {/* Confirm Password Input */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Confirm Password</span>
-              </label>
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                className="input input-bordered"
-                required
-              />
-              {passwordError && (
-                <p className="text-red-500 text-sm mt-1">{passwordError}</p>
-              )}
-            </div>
-
-            {/* Blood Group Select */}
-            <div className="form-control">
-              <label>Blood Group</label>
-              <select name="blood_group" className="select select-bordered">
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-              </select>
-            </div>
-
-            {/* District Select */}
-            <div className="form-control">
-              <label>District</label>
-              <select
-                name="districts"
-                onChange={handleDistrictChange}
-                value={selectedDistrict}
-                className="select select-bordered"
-              >
-                <option value="">-- Select a District --</option>
-                {districts.map((district) => (
-                  <option key={district.id} value={district.name}>
-                    {district.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Upazila Select */}
-            <div className="form-control">
-              <label>Upazila</label>
-              <select
-                name="upazila"
-                className="select select-bordered"
-                disabled={!selectedDistrict}
-              >
-                <option value="">-- Select Upazila --</option>
-                {filteredUpazilas.map((upazila) => (
-                  <option key={upazila.id} value={upazila.name}>
-                    {upazila.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Image Input */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Profile Image</span>
-              </label>
-              <input
-                type="file"
-                name="image"
-                className="file-input file-input-bordered w-full max-w-xs"
-                required
-              />
-            </div>
-
-            {/* Submit Button */}
+            {/* Submit Button (spans full width) */}
             <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary">
-                {registration ? "Registering" : "Register"}
+              <button
+                type="submit"
+                className="btn btn-primary text-white w-full"
+              >
+                {registration ? "Registering..." : "Register"}
               </button>
             </div>
           </form>
+
           <p className="ml-7">
             Already have an account?{" "}
             <Link className="underline" to="/login">

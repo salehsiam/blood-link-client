@@ -5,8 +5,6 @@ import SectionTitle from "../Shared-Components/SectionTitle";
 const ContactUs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    alert("Message sent! We'll get back to you shortly.");
   };
 
   return (

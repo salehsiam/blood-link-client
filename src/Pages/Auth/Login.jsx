@@ -25,7 +25,10 @@ const Login = () => {
     <div className="hero  min-h-screen">
       <div className="hero-content flex-row-reverse">
         <div className="text-center w-1/2 lg:text-left">
-          <img src={donateBlood} alt="" />
+          <img
+            src="https://i.ibb.co.com/RTZbYRwx/Blood-donation-pana.png"
+            alt=""
+          />
         </div>
 
         <div className="card w-full max-w-md">
@@ -60,7 +63,10 @@ const Login = () => {
 
             {/* Submit Button */}
             <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary">
+              <button
+                type="submit"
+                className="btn bg-primary hover:bg-primary text-white"
+              >
                 Login
               </button>
             </div>
