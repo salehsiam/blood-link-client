@@ -98,7 +98,7 @@ const Registration = () => {
   return (
     <div className="hero  min-h-screen py-24">
       <div className="hero-content flex-row-reverse">
-        <div className="text-center w-2/3 lg:text-left">
+        <div className="text-center hidden md:block w-2/3 lg:text-left">
           <img
             src="https://i.ibb.co.com/0yW8H4h5/Blood-donation-rafiki.png"
             alt=""

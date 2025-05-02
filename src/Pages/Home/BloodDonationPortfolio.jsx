@@ -15,7 +15,7 @@ const BloodDonationPortfolio = () => {
         subHeading="Our Heroes in Action"
         heading="Highlights from our donation journey."
       />
-      <div className="mt-8 grid  *:object-cover *:w-full grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="mt-8 grid  *:object-cover *:w-full grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
         <img
           src={bloodDonation1}
           alt="Blood donation event"

@@ -24,7 +24,7 @@ const Login = () => {
   return (
     <div className="hero  min-h-screen">
       <div className="hero-content flex-row-reverse">
-        <div className="text-center w-1/2 lg:text-left">
+        <div className="text-center hidden md:block w-1/2 lg:text-left">
           <img
             src="https://i.ibb.co.com/RTZbYRwx/Blood-donation-pana.png"
             alt=""

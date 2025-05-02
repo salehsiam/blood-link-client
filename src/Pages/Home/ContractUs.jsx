@@ -8,7 +8,7 @@ const ContactUs = () => {
   };
 
   return (
-    <section className="  rounded-lg shadow-lg">
+    <section className="mb-4  rounded-lg shadow-lg">
       <SectionTitle
         heading="Have questions or need help?"
         subHeading="Get in Touch "
