@@ -4,10 +4,12 @@ import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Shared-Components/Loading";
+import useUsers from "../../../Hooks/useUsers";
 
 const AdminDashboard = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [userData] = useUsers();
   const { data: stats, isLoading } = useQuery({
     queryKey: ["admin-stats"],
     queryFn: async () => {
@@ -15,7 +17,6 @@ const AdminDashboard = () => {
       return res?.data;
     },
   });
-  console.log(stats);
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -24,14 +25,28 @@ const AdminDashboard = () => {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Welcome Section */}
-      <div className=" p-6 rounded-lg text-center">
-        <h2 className="text-3xl font-bold text-gray-800">
-          Welcome <span className="text-red-500">{user?.displayName}</span>
-        </h2>
-        <p className="text-lg text-green-600 my-6">
-          You have the power to manage and grow this platform. Let’s save lives
-          together by ensuring smooth operations and efficient management.
-        </p>
+      <div
+        className=" h-[180px] md:h-[250px] bg-cover bg-center  rounded-xl shadow-md overflow-hidden bg-white"
+        style={{
+          backgroundImage: `linear-gradient(rgb(1, 152, 182), rgba(1, 152, 182, 0.7)), url(${
+            userData?.image || "https://i.imgur.com/8Km9tLL.png"
+          })`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className=" inset-0 flex items-center justify-center">
+          <div className="text-center p-6 flex flex-col items-center gap-4">
+            <img
+              src={userData?.image || ""}
+              alt={user?.displayName || "User"}
+              className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
+            />
+            <h1 className="text-xl md:text-4xl font-bold text-white mb-2">
+              Welcome Back, {user?.displayName?.split(" ")[0] || "User"}!
+            </h1>
+          </div>
+        </div>
       </div>
 
       {/* Statistics Section */}

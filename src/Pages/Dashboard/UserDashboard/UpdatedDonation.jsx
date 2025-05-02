@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import useAxiosPublic, { axiosPublic } from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import SectionTitle from "../../Shared-Components/SectionTitle";
 
 const UpdatedDonation = () => {
   const { id } = useParams();
@@ -111,170 +112,170 @@ const UpdatedDonation = () => {
   };
 
   return (
-    <div className="">
-      <h2 className="text-4xl text-center ">Update Donation Request</h2>
-      <div className="card w-full max-w-lg mx-auto">
-        <form onSubmit={handleDonationRequest} className="card-body">
+    <div className=" mt-6">
+      <SectionTitle
+        subHeading="Update Donation Request"
+        heading="Fill in the necessary details"
+      />
+      <div className=" max-w-3xl mx-auto">
+        <form onSubmit={handleDonationRequest} className="space-y-4">
           {/* Requester Name Input */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Requester Name</span>
-            </label>
-            <input
-              type="text"
-              defaultValue={user?.displayName}
-              name="requester_name"
-              placeholder="Requester Name"
-              className="input input-bordered"
-              readOnly
-            />
-          </div>
-          {/*Requester Email Input */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Requester Email</span>
-            </label>
-            <input
-              type="email"
-              defaultValue={user?.email}
-              name="requester_email"
-              placeholder="Requester Email"
-              className="input input-bordered"
-              readOnly
-            />
-          </div>
-          {/* Recipient Name */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Recipient Name</span>
-            </label>
-            <input
-              type="text"
-              defaultValue={reqData.recipient_name}
-              name="recipient_name"
-              placeholder="Recipient Name"
-              className="input input-bordered"
-            />
-          </div>
-
-          {/* District Select */}
-          <div className="form-control">
-            <label>Recipient District</label>
-            <select
-              name="districts"
-              onChange={handleDistrictChange}
-              value={selectedDistrict}
-              className="select select-bordered"
-            >
-              <option value="">-- Select a District --</option>
-              {districts.map((district) => (
-                <option key={district.id} value={district.name}>
-                  {district.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-control">
-            <label>Recipient Upazila</label>
-            <select
-              name="upazila"
-              value={reqData.recipient_upazila || ""}
-              onChange={(e) =>
-                setReqData({ ...reqData, recipient_upazila: e.target.value })
-              }
-              className="select select-bordered"
-              disabled={!selectedDistrict}
-            >
-              <option value="">-- Select Upazila --</option>
-              {filteredUpazilas.map((upazila) => (
-                <option key={upazila.id} value={upazila.name}>
-                  {upazila.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          {/* Hospital Name */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Hospital Name</span>
-            </label>
-            <input
-              type="text"
-              defaultValue={reqData.hospital_name}
-              name="hospital_name"
-              placeholder="Hospital Name"
-              className="input input-bordered"
-            />
-          </div>
-          {/* Address */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Full Address</span>
-            </label>
-            <input
-              type="text"
-              name="address"
-              defaultValue={reqData.address}
-              placeholder="Full Address"
-              className="input input-bordered"
-            />
-          </div>
-
-          {/* Blood Group Select */}
-          <div className="form-control">
-            <label>Blood Group</label>
-            <select
-              value={reqData.blood_group}
-              name="blood_group"
-              className="select select-bordered"
-            >
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-            </select>
-          </div>
-          <div className="flex gap-4">
-            {/* Time */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Select Time</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="label-text font-semibold">Requester Name</label>
+              <input
+                type="text"
+                defaultValue={user?.displayName}
+                name="requester_name"
+                className="input input-bordered w-full bg-gray-50"
+                readOnly
+              />
+            </div>
+            {/*Requester Email Input */}
+            <div>
+              <label className="label-text font-semibold">
+                Requester Email
               </label>
               <input
-                type="time"
-                defaultValue={reqData.time}
-                name="time"
-                className="input input-bordered"
+                type="email"
+                defaultValue={user?.email}
+                name="requester_email"
+                className="input input-bordered w-full bg-gray-50"
+                readOnly
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Recipient Name */}
+            <div>
+              <label className="label-text font-semibold">Recipient Name</label>
+              <input
+                type="text"
+                name="recipient_name"
+                defaultValue={reqData.recipient_name}
+                className="input input-bordered w-full"
+                placeholder="Recipient Name"
                 required
               />
             </div>
-            {/* Date */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Select Date</span>
+            {/*Requester Email Input */}
+            <div>
+              <label className="label-text font-semibold">Blood Group</label>
+              <select
+                name="blood_group"
+                value={reqData.blood_group}
+                className="select select-bordered w-full"
+                required
+              >
+                <option value="">-- Select Blood Group --</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="label-text font-semibold">
+                Recipient District
               </label>
-              <DatePicker
-                className="input input-bordered"
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
+              <select
+                name="districts"
+                onChange={handleDistrictChange}
+                value={selectedDistrict}
+                className="select select-bordered w-full"
+              >
+                <option value="">-- Select a District --</option>
+                {districts.map((district) => (
+                  <option key={district.id} value={district.name}>
+                    {district.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="label-text font-semibold">
+                Recipient Upazila
+              </label>
+              <select
+                name="upazila"
+                value={reqData.recipient_upazila || ""}
+                onChange={(e) =>
+                  setReqData({ ...reqData, recipient_upazila: e.target.value })
+                }
+                className="select select-bordered w-full"
+                disabled={!selectedDistrict}
+              >
+                <option value="">-- Select Upazila --</option>
+                {filteredUpazilas.map((upazila) => (
+                  <option key={upazila.id} value={upazila.name}>
+                    {upazila.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="label-text font-semibold">Hospital Name</label>
+              <input
+                type="text"
+                name="hospital_name"
+                defaultValue={reqData.hospital_name}
+                className="input input-bordered w-full"
+                placeholder="Hospital Name"
+                required
+              />
+            </div>
+            <div>
+              <label className="label-text font-semibold">Full Address</label>
+              <input
+                type="text"
+                name="address"
+                defaultValue={reqData.address}
+                className="input input-bordered w-full"
+                placeholder="Full Address"
+                required
               />
             </div>
           </div>
-          {/* Request Message */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Request Message</span>
-            </label>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="label-text font-semibold">Select Time</label>
+              <input
+                type="time"
+                name="time"
+                defaultValue={reqData.time}
+                className="input input-bordered w-full"
+                required
+              />
+            </div>
+            <div className="flex flex-col justify-center">
+              <label className="label-text font-semibold">Select Date</label>
+              <DatePicker
+                className="input input-bordered w-full"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <label className="label-text font-semibold">Request Message</label>
             <textarea
               name="request_message"
               defaultValue={reqData.request_message}
-              className="textarea textarea-bordered"
-              placeholder="Request Message"
+              className="textarea textarea-bordered w-full"
+              placeholder="Please explain the urgency of your request."
+              required
             ></textarea>
           </div>
 
