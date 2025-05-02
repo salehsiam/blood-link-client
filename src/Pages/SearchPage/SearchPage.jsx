@@ -36,6 +36,7 @@ const SearchPage = () => {
       setFilteredUpazilas([]);
     }
   };
+
   useEffect(() => {
     axiosPublic
       .get("/search-donation-request", {
@@ -68,16 +69,15 @@ const SearchPage = () => {
 
   return (
     <div className="container mx-auto px-6 py-24">
-      <h1 className="text-2xl font-bold mb-4">Search Donors</h1>
       <form
         onSubmit={handleSearch}
-        className="bg-white/80  shadow-xl p-8 rounded-2xl backdrop-blur-lg relative"
+        className="bg-white p-8 rounded-xl shadow-xl backdrop-blur-lg border-t-4 border-red-500"
       >
         {/* Gradient Border Effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 opacity-20 rounded-2xl pointer-events-none"></div>
+        <div className="absolute inset-0  opacity-20 rounded-xl pointer-events-none"></div>
 
         {/* Heading */}
-        <h2 className="text-2xl font-bold text-red-600 text-center mb-6">
+        <h2 className="text-2xl font-semibold text-center text-red-600 mb-6">
           Search for Donors
         </h2>
 
@@ -156,65 +156,65 @@ const SearchPage = () => {
         <div className="mt-6 text-center">
           <button
             type="submit"
-            className="px-6 py-3 bg-red-500 text-white text-lg font-semibold rounded-full shadow-md hover:bg-red-600 transition duration-300 transform hover:scale-105"
+            className="px-6 py-3 bg-red-600 text-white text-lg font-semibold rounded-full shadow-md hover:bg-red-700 transition duration-300 transform hover:scale-105"
           >
             <p className="flex items-center gap-2">
-              {" "}
               <FaSearch /> Search
             </p>
           </button>
         </div>
       </form>
 
-      <div className="mt-6">
+      <div className="mt-8">
         {loading ? (
-          <p>Loading...</p>
+          <p className="text-center text-gray-600">Loading...</p>
         ) : searchResults.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {searchResults.map((result) => (
               <div
                 key={result._id}
-                className="relative bg-white/80 border border-gray-200 shadow-lg rounded-xl overflow-hidden p-5 backdrop-blur-lg hover:shadow-2xl"
+                className=" flex flex-col border border-primary/30 rounded-xl overflow-hidden p-5 "
               >
-                {/* Gradient Border Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-red-600 opacity-25 rounded-xl pointer-events-none"></div>
-
-                {/* Card Content */}
-                <h2 className="font-bold text-xl text-red-600 mb-2">
+                {/* Recipient Name */}
+                <h2 className="font-bold text-xl text-primary mb-3">
                   {result.recipient_name}
                 </h2>
 
-                <p className="text-gray-700 flex gap-1 items-center">
-                  <FaLocationPin />
-                  <strong> Location:</strong> {result.recipient_zila},{" "}
-                  {result.recipient_upazila}
-                </p>
+                {/* Request Info */}
+                <div className="flex flex-col grow text-gray-700 space-y-2">
+                  <p className="flex items-center  gap-2">
+                    <FaLocationPin className="text-primary " />
+                    <span>
+                      {result.recipient_zila}, {result.recipient_upazila}
+                    </span>
+                  </p>
 
-                <p className="text-gray-700">
-                  <strong>🩸 Blood Group:</strong>
-                  <span className="bg-red-500 text-white px-2 py-1 rounded-md ml-1">
-                    {result.bloodGroup}
-                  </span>
-                </p>
+                  <p>
+                    <strong>Blood Group:</strong>
+                    <span className="ml-2 inline-block bg-primary text-white text-sm px-2 py-1 rounded-md shadow">
+                      {result.bloodGroup}
+                    </span>
+                  </p>
 
-                <p className="text-gray-700 flex items-center gap-2">
-                  <FaCalendarAlt />
-                  <strong>Date:</strong>{" "}
-                  {format(new Date(result.date), "MMMM dd, yyyy")}
-                </p>
+                  <p className="flex items-center gap-2">
+                    <FaCalendarAlt className="text-primary" />
+                    <span>
+                      <strong>Date:</strong>{" "}
+                      {format(new Date(result.date), "MMMM dd, yyyy")}
+                    </span>
+                  </p>
 
-                <p className="text-gray-700">
-                  <strong>⏰ Time:</strong> {result.time}
-                </p>
+                  <p>
+                    <strong>⏰ Time:</strong> {result.time}
+                  </p>
+                </div>
 
-                {/* Call to Action Button */}
-                <Link to={`/donation-request-details/${result._id}`}>
-                  <button
-                    className="w-full mt-4 py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition duration-300"
-                    onClick={() =>
-                      console.log(`Viewing details for ${result._id}`)
-                    }
-                  >
+                {/* View Details Button */}
+                <Link
+                  to={`/donation-request-details/${result._id}`}
+                  className="mt-4"
+                >
+                  <button className="w-full py-2 px-4 bg-primary text-white font-semibold rounded-lg hover:bg-red-700 transition duration-300">
                     View Details
                   </button>
                 </Link>
@@ -222,7 +222,7 @@ const SearchPage = () => {
             ))}
           </div>
         ) : (
-          <p>No results found.</p>
+          <p className="text-center text-gray-600">No results found.</p>
         )}
       </div>
     </div>

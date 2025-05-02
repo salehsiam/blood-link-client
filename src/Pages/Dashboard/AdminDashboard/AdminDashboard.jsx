@@ -26,23 +26,25 @@ const AdminDashboard = () => {
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Welcome Section */}
       <div
-        className=" h-[180px] md:h-[250px] bg-cover bg-center  rounded-xl shadow-md overflow-hidden bg-white"
+        className="h-[200px] md:h-[280px] rounded-2xl overflow-hidden shadow-xl relative"
         style={{
-          backgroundImage: `linear-gradient(rgb(1, 152, 182), rgba(1, 152, 182, 0.7)), url(${
+          backgroundImage: `linear-gradient(to bottom right, rgba(1,152,182,0.9), rgba(1,152,182,0.6)), url(${
             userData?.image || "https://i.imgur.com/8Km9tLL.png"
           })`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className=" inset-0 flex items-center justify-center">
-          <div className="text-center p-6 flex flex-col items-center gap-4">
+        <div className="absolute inset-0 bg-black/30 rounded-2xl"></div>
+
+        <div className="relative z-10 h-full flex items-center justify-center">
+          <div className="text-center p-4 md:p-6 flex flex-col items-center gap-3">
             <img
-              src={userData?.image || ""}
+              src={userData?.image || "https://i.imgur.com/8Km9tLL.png"}
               alt={user?.displayName || "User"}
-              className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
+              className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-white shadow-lg object-cover"
             />
-            <h1 className="text-xl md:text-4xl font-bold text-white mb-2">
+            <h1 className="text-lg md:text-3xl font-bold text-white">
               Welcome Back, {user?.displayName?.split(" ")[0] || "User"}!
             </h1>
           </div>

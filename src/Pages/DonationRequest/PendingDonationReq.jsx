@@ -27,7 +27,7 @@ const PendingDonationReq = () => {
         subHeading="Donation Requests"
         heading="Donation requests awaiting your action."
       />
-      <div className="overflow-x-auto min-h-screen">
+      <div className="overflow-x-auto ">
         <table className="table table-zebra border border-red-500">
           <thead>
             <tr className="bg-red-600 text-white">
@@ -74,19 +74,19 @@ const PendingDonationReq = () => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="mt-4 flex justify-between">
+      <div className="mt-4 flex items-center justify-end">
         <button
-          className="btn bg-red-600 text-white"
+          className="btn  btn-outline"
           disabled={page === 1}
           onClick={() => setPage(page - 1)}
         >
           Previous
         </button>
-        <p>
-          Page {page} of {totalPages} ({totalRequests} total requests)
+        <p className="mx-2">
+          Page {page} of {totalPages}
         </p>
         <button
-          className="btn bg-red-600 text-white"
+          className="btn btn-outline "
           disabled={page === totalPages}
           onClick={() => setPage(page + 1)}
         >

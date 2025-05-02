@@ -57,12 +57,12 @@ const AllBloodDonation = () => {
   }
 
   return (
-    <div className="mt-16 px-8">
+    <div className="mt-16 px-8 ">
       <SectionTitle
         subHeading="Browse current blood donation"
         heading="All Donation Requests"
       />
-      <div className="overflow-x-auto min-h-screen">
+      <div className="overflow-x-auto">
         <table className="table table-zebra border border-red-500">
           <thead>
             <tr className="bg-red-600 text-white">
@@ -124,24 +124,24 @@ const AllBloodDonation = () => {
                           Edit
                         </Link>
                       </li>
-                      <li>
-                        {isAdmin && (
+                      {isAdmin && (
+                        <li>
                           <button
                             onClick={() => handleDelete(singleRequest._id)}
                           >
                             Delete
                           </button>
-                        )}
-                      </li>
-                      <li>
-                        {isAdmin && (
+                        </li>
+                      )}
+                      {isAdmin && (
+                        <li>
                           <Link
                             to={`/donation-request-details/${singleRequest._id}`}
                           >
                             View
                           </Link>
-                        )}
-                      </li>
+                        </li>
+                      )}
                     </ul>
                   </div>
                 </td>
@@ -152,16 +152,27 @@ const AllBloodDonation = () => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex justify-center mt-6 gap-2">
-        {[...Array(totalPages).keys()].map((page) => (
-          <button
-            key={page + 1}
-            className={`btn ${currentPage === page + 1 ? "btn-active" : ""}`}
-            onClick={() => setCurrentPage(page + 1)}
-          >
-            {page + 1}
-          </button>
-        ))}
+
+      <div className="flex justify-end mt-4">
+        <button
+          className="btn btn-outline"
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <p className="mx-2">
+          Page {currentPage} of {totalPages}
+        </p>
+        <button
+          className="btn btn-outline"
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

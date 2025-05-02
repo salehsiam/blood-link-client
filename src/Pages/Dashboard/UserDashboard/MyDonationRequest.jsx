@@ -59,11 +59,12 @@ const MyDonationRequest = () => {
 
   return (
     <div className="my-8 px-6">
-      <div className="flex justify-between mb-4">
-        <SectionTitle heading="My Donations" subHeading="Donation Request" />
+      <SectionTitle heading="My Donations" subHeading="Donation Request" />
 
-        {/* Filter Dropdown */}
-        <div className="flex justify-end">
+      {/* Filter Dropdown */}
+      <div className="flex  justify-between mb-2">
+        <div></div>
+        <div>
           <select
             className="select select-bordered w-full max-w-xs"
             value={filterStatus}
@@ -166,14 +167,17 @@ const MyDonationRequest = () => {
           </tbody>
         </table>
         {/* Pagination Controls */}
-        <div className="flex justify-end mt-4">
+        <div className="flex items-center justify-end mt-4">
           <button
-            className="btn btn-outline mx-2"
+            className="btn btn-outline"
             disabled={page === 1}
             onClick={() => setPage(page - 1)}
           >
             Previous
           </button>
+          <p className="mx-2">
+            Page {page} of {bloodRequest.totalPages}
+          </p>
           <button
             className="btn btn-outline"
             disabled={page === bloodRequest.totalPages}
@@ -182,9 +186,6 @@ const MyDonationRequest = () => {
             Next
           </button>
         </div>
-        <p className="text-right mt-2">
-          Page {page} of {bloodRequest.totalPages}
-        </p>
       </div>
     </div>
   );
