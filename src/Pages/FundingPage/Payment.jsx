@@ -11,21 +11,21 @@ const Payment = () => {
   const [amount, setAmount] = useState("");
 
   return (
-    <div className="py-24 bg-gray-50 min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-lg bg-white border border-red-500 rounded-2xl p-8">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-extrabold text-red-600">
+    <div className="min-h-screen py-20 px-4 flex items-center justify-center">
+      <div className="w-full max-w-md  border border-red-200 shadow-lg rounded-2xl p-8">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-red-600">
             Support Our Cause
           </h2>
-          <p className="text-gray-600 mt-1 text-sm">
-            Donate to help save lives through blood donation.
+          <p className="text-gray-600 mt-2 text-sm">
+            Your donation helps save lives through blood donation.
           </p>
         </div>
 
         <div className="mb-6">
           <label
             htmlFor="amount"
-            className="block text-sm font-medium text-neutral mb-2"
+            className="block text-sm font-medium text-neutral mb-1"
           >
             Enter Amount (USD)
           </label>
@@ -33,7 +33,7 @@ const Payment = () => {
             id="amount"
             type="number"
             placeholder="e.g. 50"
-            className="input input-bordered w-full text-lg"
+            className="input input-bordered w-full text-lg focus:outline-none focus:ring-2 focus:ring-red-500"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             min="1"
@@ -44,6 +44,10 @@ const Payment = () => {
         <Elements stripe={stripePromise}>
           <CheckoutForm amount={amount} />
         </Elements>
+
+        <p className="text-xs text-center text-gray-400 mt-6">
+          Powered by <span className="text-blue-500 font-semibold">Stripe</span>
+        </p>
       </div>
     </div>
   );

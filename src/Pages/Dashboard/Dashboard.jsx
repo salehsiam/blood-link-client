@@ -71,7 +71,7 @@ const Dashboard = () => {
               </h2>
               <button
                 onClick={toggleTheme}
-                className="p-3 bg-base-200 rounded-full transition-all"
+                className="p-2 bg-base-200 rounded-full transition-all"
                 aria-label="Toggle Theme"
               >
                 {theme === "dark" ? (

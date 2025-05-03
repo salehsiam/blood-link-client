@@ -71,21 +71,47 @@ const Navbar = () => {
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="flex gap-6 text-sm px-1">
             <li>
-              <NavLink to="/donation-request">Donation Request</NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `${isActive ? "underline text-primary font-semibold" : ""}`
+                }
+                to="/"
+              >
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/blogs">Blog</NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `${isActive ? "underline text-primary font-semibold" : ""}`
+                }
+                to="/donation-request"
+              >
+                Donation Request
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/funding">Give Fund</NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  `${isActive ? "underline text-primary font-semibold" : ""}`
+                }
+                to="/blogs"
+              >
+                Blog
+              </NavLink>
             </li>
-            {!user && (
-              <li>
-                <NavLink to="/login">Login</NavLink>
-              </li>
-            )}
+            <li>
+              <NavLink
+                className={({ isActive }) =>
+                  `${isActive ? "underline text-primary font-semibold" : ""}`
+                }
+                to="/funding"
+              >
+                Give Fund
+              </NavLink>
+            </li>
           </ul>
         </div>
         <div className="navbar-end">
@@ -107,9 +133,13 @@ const Navbar = () => {
               className="btn btn-ghost btn-circle tooltip tooltip-left avatar"
               data-tip={userData.name}
             >
-              <div className="w-10 justify-center items-center rounded-full">
+              <div className="w-10 h-10 flex justify-center items-center rounded-full overflow-hidden">
                 {user ? (
-                  <img alt={userData.name} src={userData.image} />
+                  <img
+                    className="w-full h-full object-cover"
+                    alt={userData.name}
+                    src={userData.image}
+                  />
                 ) : (
                   <FaUserCircle className="text-3xl" />
                 )}
@@ -122,6 +152,20 @@ const Navbar = () => {
               <li>
                 <NavLink to="/dashboard">Dashboard</NavLink>
               </li>
+              {!user && (
+                <li>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `${
+                        isActive ? "underline text-primary font-semibold" : ""
+                      }`
+                    }
+                    to="/login"
+                  >
+                    Login
+                  </NavLink>
+                </li>
+              )}
               {user && (
                 <li>
                   {" "}
