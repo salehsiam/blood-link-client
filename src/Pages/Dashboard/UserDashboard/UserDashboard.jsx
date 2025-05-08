@@ -30,7 +30,7 @@ const UserDashboard = () => {
       const res = await axiosSecure.patch(`/set-status/${id}`, {
         status: newStatus,
       });
-      console.log(res.data);
+   
       refetch();
     } catch (error) {
       console.error("Error updating status:", error);
@@ -57,7 +57,7 @@ const UserDashboard = () => {
       }
     });
   };
-  console.log(userData);
+ 
 
   return (
     <div className="px-4 my-8">

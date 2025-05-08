@@ -71,7 +71,7 @@ const SearchPage = () => {
     <div className="container mx-auto px-6 py-24">
       <form
         onSubmit={handleSearch}
-        className="bg-white p-8 rounded-xl shadow-xl backdrop-blur-lg border-t-4 border-red-500"
+        className=" p-8 rounded-xl shadow-xl backdrop-blur-lg border-t-4 border-b border-red-500"
       >
         {/* Gradient Border Effect */}
         <div className="absolute inset-0  opacity-20 rounded-xl pointer-events-none"></div>

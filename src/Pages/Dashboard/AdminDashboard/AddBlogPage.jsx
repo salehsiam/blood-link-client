@@ -41,7 +41,6 @@ const AddBlogPage = () => {
         status: "draft",
         createdAt: new Date(),
       };
-      console.log(blogData);
 
       const response = await axiosPublic.post("/blogs", blogData);
       if (response.data.insertedId) {

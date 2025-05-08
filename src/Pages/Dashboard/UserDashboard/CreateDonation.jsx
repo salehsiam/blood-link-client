@@ -58,8 +58,7 @@ const CreateDonation = () => {
       date: startDate,
       status: "pending",
     };
-    console.log(donationRequestData);
-    console.log(userData);
+   
 
     if (userData.status === "blocked") {
       Swal.fire({
@@ -71,7 +70,7 @@ const CreateDonation = () => {
     }
 
     axiosPublic.post("/blood-request", donationRequestData).then((res) => {
-      console.log(res.data);
+     
       form.reset();
 
       Swal.fire({

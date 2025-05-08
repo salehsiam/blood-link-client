@@ -17,7 +17,6 @@ const CheckoutForm = ({ amount }) => {
       axiosSecure
         .post("/create-payment-intent", { amount })
         .then((res) => {
-          console.log(res.data.clientSecret);
           if (res.data && res.data.clientSecret) {
             setClientSecret(res.data.clientSecret);
           } else {
@@ -70,8 +69,6 @@ const CheckoutForm = ({ amount }) => {
     if (confirmError) {
       console.error("Payment Confirmation Error:", confirmError);
     } else if (paymentIntent.status === "succeeded") {
-      console.log("Payment Successful", paymentIntent);
-
       const funding = {
         name: user.displayName,
         amount: paymentIntent.amount,
