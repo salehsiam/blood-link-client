@@ -60,35 +60,35 @@ const DonationDetails = () => {
         subHeading="View & Confirm"
       />
       <div className="flex justify-center">
-        <div className="bg-white shadow-xl rounded-xl p-8 max-w-3xl w-full border border-red-200">
+        <div className=" shadow-xl rounded-xl p-8 max-w-3xl w-full border border-red-200">
           <h2 className="md:text-3xl text-2xl font-semibold text-red-600 mb-4 text-center">
             Recipient: {requestDetails.recipient_name}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 text-md">
-            <div className="p-4 bg-red-50 border-l-4 border-red-500 rounded-md shadow-sm">
+            <div className="p-4  border-l-4 bg-accent/10 border-red-500 rounded-md shadow-sm">
               <strong>Blood Group:</strong> {requestDetails.bloodGroup}
             </div>
-            <div className="p-4 bg-gray-100 rounded-md">
+            <div className="p-4 bg-accent/10  rounded-md">
               <strong>District:</strong> {requestDetails.recipient_zila}
             </div>
-            <div className="p-4 bg-gray-100 rounded-md">
+            <div className="p-4 bg-accent/10 rounded-md">
               <strong>Upazila:</strong> {requestDetails.recipient_upazila}
             </div>
-            <div className="p-4 bg-gray-100 rounded-md">
+            <div className="p-4 bg-accent/10  rounded-md">
               <strong>Hospital:</strong> {requestDetails.hospital_name}
             </div>
-            <div className="p-4 bg-gray-100 rounded-md md:col-span-2">
+            <div className="p-4 bg-accent/10 rounded-md md:col-span-2">
               <strong>Address:</strong> {requestDetails.address}
             </div>
-            <div className="p-4 bg-red-50 border-l-4 border-red-500 rounded-md">
+            <div className="p-4 bg-accent/10 border-l-4 border-red-500 rounded-md">
               <strong>Date:</strong>{" "}
               {new Date(requestDetails.date).toDateString()}
             </div>
-            <div className="p-4 bg-red-50 border-l-4 border-red-500 rounded-md">
+            <div className="p-4 bg-accent/10 border-l-4 border-red-500 rounded-md">
               <strong>Time:</strong> {requestDetails.time}
             </div>
-            <div className="p-4 bg-red-100 rounded-md md:col-span-2">
+            <div className="p-4 bg-accent/10 rounded-md md:col-span-2">
               <strong>Status:</strong>{" "}
               <span
                 className={`font-semibold ${
